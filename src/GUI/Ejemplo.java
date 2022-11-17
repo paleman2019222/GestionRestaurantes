@@ -14,4 +14,5 @@ public class Ejemplo {
     
     String nombre;
     String prueba;
+    String prueba2;//solo es una prueba
 }
