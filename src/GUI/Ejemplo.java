@@ -13,4 +13,5 @@ public class Ejemplo {
     //comentario de karen
     
     String nombre;
+    String prueba;
 }
