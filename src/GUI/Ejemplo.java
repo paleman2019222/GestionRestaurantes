@@ -9,5 +9,5 @@ package GUI;
  * @author PABLO ALEMAN
  */
 public class Ejemplo {
-    
+    //este es un ejemplo por Pablo
 }
