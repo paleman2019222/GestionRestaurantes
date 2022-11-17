@@ -11,4 +11,6 @@ package GUI;
 public class Ejemplo {
     //este es un ejemplo por Pablo
     //comentario de karen
+    
+    String nombre;
 }
