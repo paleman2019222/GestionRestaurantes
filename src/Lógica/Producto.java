@@ -4,6 +4,6 @@ package Lógica;
  *
  * @author 50236
  */
-public class Puesto {
+public class Producto {
     
 }
