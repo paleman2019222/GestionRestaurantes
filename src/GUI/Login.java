@@ -200,10 +200,10 @@ public class Login extends javax.swing.JFrame {
         if(rs.next()){
             JOptionPane.showMessageDialog(null, "Si existe el usuario: " + txtUser.getText());
             
-         //   Menu mn = new Menu();
+          Menu mn = new Menu();
             
-           // mn.setVisible(true);
-            
+          mn.setVisible(true);
+          this.setVisible(false);
         }else{
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
             
