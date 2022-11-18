@@ -66,5 +66,5 @@ private int idProveedor;
     public String toString() {
         return "Empleado{" + "idproducto=" + idproducto + ", nombreProducto=" + nombreProducto + ", costoProducto=" + costoProducto + ", cantidadProducto=" + cantidadProducto + ", idProveedor=" + idProveedor + '}';
     }
-   // 
+   //prueba
 }
