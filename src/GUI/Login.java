@@ -120,14 +120,19 @@ public class Login extends javax.swing.JFrame {
         jTextField1.setToolTipText("User");
         jTextField1.setBorder(null);
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 270, 190, 20));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, 190, 20));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 190, 20));
 
-        jLabel5.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        jSeparator1.setBackground(new java.awt.Color(51, 51, 255));
+        jSeparator1.setForeground(new java.awt.Color(0, 51, 204));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, 190, 20));
+
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 255));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, 190, 20));
+
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Contraseña");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, 470, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, 470, -1));
 
         jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordField1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -138,7 +143,7 @@ public class Login extends javax.swing.JFrame {
                 jPasswordField1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, 190, 30));
+        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, 190, 30));
 
         jButton1.setBackground(new java.awt.Color(141, 158, 255));
         jButton1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
@@ -149,11 +154,11 @@ public class Login extends javax.swing.JFrame {
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 460, 130, 40));
 
-        jLabel7.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Usuario");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 470, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 470, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
