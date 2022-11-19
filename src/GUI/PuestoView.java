@@ -17,99 +17,21 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PuestoView extends javax.swing.JFrame {
     Conexion cnn = new Conexion ();
-    
-    DefaultTableModel modelPuesto = new DefaultTableModel ();
-    String []datos = new String [4];  
     Connection cc;
-
+    Puesto op = new Puesto();
+    
     public PuestoView() {
         initComponents();
-        TPuesto("");
+        //this.setLocationRelativeTo(null);
+        txtidpuesto.setEnabled(false);
+        op.mostrar(TablePuesto);
     }
-    
-    public void mostrar (String tabla ){
-        String sql = "select * from " + tabla ;
-        cc = cnn.conectar();
-        Statement st;  
-        System.out.println(sql);
-        modelPuesto.addColumn("ID");
-        modelPuesto.addColumn("Puesto");
-        TablePuesto.setModel(modelPuesto);
-        
-        try{
-            st = cc.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-                
-            while (rs.next()){
-                datos[0]=rs.getString(1);
-                datos[1]=rs.getString(2);
-                modelPuesto.addRow(datos);
-            }
-        }
-        catch(SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error "+ ex.toString());
-        }
-    }
-    
-   
+
     void limpiar(){
         txtidpuesto.setText(null);
         txtpuesto.setText(null);
     }
-    void TPuesto(String cad){
-        Puesto p = new Puesto();
-        //p.TPuesto(TablePuesto, cad);
-    }
-    /*public void nuevoRegistro(JTextField txtidpuesto, JTextField txtpuesto){
-        Connection cn = cnn.conectar();
-        
-        Puesto puesto = new Puesto ();
-        puesto.setIdpuesto(Integer.parseInt(txtidpuesto.getText()));
-        puesto.setPuesto(txtpuesto.getText());
-        
-        try {
-            String sql = "CALL REGISTRAR_CLIENTE (?,?)";
-            PreparedStatement consulta = cn.prepareStatement(sql);
-            
-            consulta.setInt(1, puesto.getIdpuesto());
-            consulta.setString(2, puesto.getPuesto());
-            
-            consulta.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Se han registrado los datos");
-            consulta.close();
-        }                                       
-        catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
-            Logger.getLogger(PuestoView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        mostrar("puesto");
-    }
-    public void modificarRegistro(JTextField txtidpuesto, JTextField txtpuesto){
-        Connection cn = cnn.conectar();
-        
-        Puesto puesto = new Puesto ();
-        puesto.setIdpuesto(Integer.parseInt(txtidpuesto.getText()));
-        puesto.setPuesto(txtpuesto.getText());
-        
-        try {
-            String sql = "CALL MODIFICAR_CLIENTE (?,?)";
-            PreparedStatement consulta = cn.prepareStatement(sql);
-            
-            consulta.setInt(1, puesto.getIdpuesto());
-            consulta.setString(2, puesto.getPuesto());
-            
-            consulta.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Se han modificado los datos");
-            consulta.close();
-        }                                       
-        catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al modificar los datos ");
-            Logger.getLogger(PuestoView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        mostrar("puesto");
-    }*/
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -194,11 +116,12 @@ public class PuestoView extends javax.swing.JFrame {
         });
         jPanel2.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 90, 30));
 
+        txtidpuesto.setEditable(false);
         txtidpuesto.setBackground(new java.awt.Color(0, 0, 0));
         txtidpuesto.setForeground(new java.awt.Color(255, 255, 255));
         txtidpuesto.setBorder(null);
         txtidpuesto.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtidpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 170, -1));
+        jPanel2.add(txtidpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 170, 20));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 170, 20));
 
         txtpuesto.setBackground(new java.awt.Color(0, 0, 0));
@@ -245,14 +168,13 @@ public class PuestoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        Puesto p = new Puesto();
-        p.nuevoRegistro(txtidpuesto, txtpuesto);
-        TPuesto("");
+        op.nuevoRegistro(txtpuesto);
+        op.mostrar(TablePuesto);
         limpiar();
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        int fila = TablePuesto.getSelectedRow();
+        /*int fila = TablePuesto.getSelectedRow();
         String valorId = TablePuesto.getValueAt(fila, 0).toString();
         if( fila >= 0){
             try{
@@ -270,34 +192,13 @@ public class PuestoView extends javax.swing.JFrame {
         
         } else {
             JOptionPane.showMessageDialog(null,"Seleccionar fila");
-        }
+        }*/
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-       Puesto p = new Puesto();
-       p.modificarRegistro(txtidpuesto, txtpuesto);
-       TPuesto("");
-       limpiar();
-        
-        
-        
-        /*Connection cn = cnn.conectar();
-        
-        try {
-            String sql = "CALL MODIFICAR_CLIENTE (?,?)";
-            PreparedStatement pps = cn.prepareCall(sql);
-            pps.setString(1,txtidpuesto.getText());
-            pps.setString(2,txtpuesto.getText());
-            
-            pps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Se han modificado los datos");
-        }                                       
-        catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
-            Logger.getLogger(PuestoView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        limpiar();*/
+        op.modificarRegistro(txtidpuesto, txtpuesto);
+        op.mostrar(TablePuesto);
+        limpiar();
     }//GEN-LAST:event_EditarActionPerformed
 
     private void TablePuestoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablePuestoMouseClicked

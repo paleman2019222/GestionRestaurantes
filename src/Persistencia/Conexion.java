@@ -18,7 +18,7 @@ public class Conexion {
     private final String bd = "bdrestaurante";   // Constante 
     private final String url = "jdbc:mysql://localhost:3306/";
     private final String user ="root";
-    private final String password = "Pablito123";
+    private final String password = "Tebasdeaqui1.";
     private final String driver ="com.mysql.cj.jdbc.Driver";
     
     Connection cnn= null;
