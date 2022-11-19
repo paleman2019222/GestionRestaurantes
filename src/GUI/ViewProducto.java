@@ -12,24 +12,23 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import java.sql.ResultSet;
-
-
-
-
-
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Raquel
  */
-public class Producto extends javax.swing.JFrame {
+public class ViewProducto extends javax.swing.JFrame {
    Conexion cnn = new Conexion ();
    Connection conect; 
+   DefaultTableModel model = new DefaultTableModel (); 
+   String []datos = new String [4];      
 
     /**
      * Creates new form Producto
      */
-    public Producto() {
+    public ViewProducto() {
         initComponents();
     }
 
@@ -130,6 +129,7 @@ public class Producto extends javax.swing.JFrame {
 
         GuardarBtn.setText("Guardar");
         GuardarBtn.setBorder(null);
+        GuardarBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         GuardarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardarBtnActionPerformed(evt);
@@ -315,6 +315,11 @@ public class Producto extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        viewProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewProductoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(viewProducto);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
@@ -325,6 +330,7 @@ public class Producto extends javax.swing.JFrame {
         editar.setForeground(new java.awt.Color(255, 255, 255));
         editar.setText("Editar");
         editar.setBorder(null);
+        editar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editarActionPerformed(evt);
@@ -335,6 +341,7 @@ public class Producto extends javax.swing.JFrame {
         Eliminar.setForeground(new java.awt.Color(255, 255, 255));
         Eliminar.setText("Eliminar");
         Eliminar.setBorder(null);
+        Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EliminarActionPerformed(evt);
@@ -387,58 +394,125 @@ public class Producto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+        
+void limpiar(){
+    idproducto.setText(null);
+    nombreproduct.setText(null);
+    costoproduct.setText(null);
+    cantidadproduct.setText(null);
+    idproveedor.setText(null);
+
+    
+}
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
-        // TODO add your handling code here:
+
+       Connection cn = cnn.conectar();
+        
+        try {
+            String sql = "CALL MODIFICAR_CLIENTE (?,?,?,?)";
+            PreparedStatement pps = cn.prepareCall(sql);
+            pps.setString(1, idproducto.getText());
+            pps.setString(2,nombreproduct.getText());
+            pps.setString(3,cantidadproduct.getText());
+            pps.setString(4,costoproduct.getText());
+            
+            //pps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Se han modificado los datos");
+        }                                       
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
+            Logger.getLogger(ViewProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        limpiar();
+
     }//GEN-LAST:event_editarActionPerformed
 
+    public void mostrar (String tabla ){
+    
+    String sql = "select * from " + tabla ;   // Consulta sql 
+        
+        conect = cnn.conectar();   // conectar a traves del objeto tipo connection
+        Statement st;  // objeto de statement para las sentencias sql
+        System.out.println(sql);
+        //DefaultTableModel model = new DefaultTableModel ();
+        model.addColumn("ID");
+        model.addColumn("Nombre producto");
+        model.addColumn("Costo");
+        model.addColumn("Cantidad");
+        model.addColumn("Proveedor");
+        viewProducto.setModel(model);
+
+        try{
+         st=conect.createStatement();
+         ResultSet result = st.executeQuery(sql);   // para objetner resultados de columnas correspodientes a filas 
+            while (result.next())
+            {
+                datos[0]=result.getString(1);
+                datos[1]=result.getString(2);
+                datos[2]=result.getString(3);
+                datos[3]=result.getString(4);
+                               // datos[4]=result.getString(5);
+
+                model.addRow(datos);
+            }
+         
+        }
+        catch(SQLException ex) {
+         JOptionPane.showMessageDialog(null, "Error "+ ex.toString());
+       }
+
+    }
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-           /*  int fila = viewProducto.getSelectedRow();
-     String valor = viewProducto.getValueAt(fila, 0).toString();
-      if( fila >= 0){
+   int fila = viewProducto.getSelectedRow();
+   String valor = viewProducto.getValueAt(fila, 0).toString();
+        if( fila >= 0){
           try{
-            PreparedStatement ps = conect.preparedstatement("Delete FROM vendedor Where Id_Vendedor = '"+valor+"'");
+            PreparedStatement ps = conect.prepareStatement("Delete FROM producto Where idproducto = '"+valor+"'");
                ps.executeUpdate();
                 JOptionPane.showMessageDialog(null,"Dato Eliminado");
-                 model.removeTableModelListener(Visor);
+                 model.removeTableModelListener(viewProducto);
                  model.getDataVector().removeAllElements();
                  viewProducto.updateUI();
                 
-                mostrar ("vendedor");
+                mostrar ("producto");
           } catch (SQLException ex) { 
-             Logger.getLogger(MostrarDatos.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(ViewProducto.class.getName()).log(Level.SEVERE, null, ex);
          }
         
       } else {
           JOptionPane.showMessageDialog(null,"Seleccionar fila");
-      }*/
+      }
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void GuardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarBtnActionPerformed
-Connection cn = cnn.conectar();
-        
-        
+    
+       
+        Connection cn = cnn.conectar();
        try {
-        PreparedStatement  ps = cn.prepareStatement("INSERT INTO producto (idproducto, nombreProducto, costoProducto, cantidadProducto, idProveedor ) values (?,?,?,?, ?)");
-        int id= Integer.parseInt(idproducto.getText());
+        PreparedStatement  ps = cn.prepareStatement("INSERT INTO producto (nombreProducto, costoProducto, cantidadProducto, idProveedor ) values (?,?,?,?)");
+        //int id= Integer.parseInt(idproducto.getText());
         double costo = Double.parseDouble(costoproduct.getText());
         int cantidad = Integer.parseInt (cantidadproduct.getText());
         int proveedor = Integer.parseInt (idproveedor.getText());
-        ps.setInt(1,id);   
-        ps.setString(2,nombreproduct.getText());
-        ps.setDouble(3,costo);
-        ps.setInt(4,cantidad);
-        ps.setInt(5, proveedor);
+     //   ps.setInt(1,id);   
+        ps.setString(1,nombreproduct.getText());
+        ps.setDouble(2,costo);
+        ps.setInt(3,cantidad);
+        ps.setInt(4, proveedor);
         
         ps.executeUpdate();
          JOptionPane.showMessageDialog(null, "Datos guardados");// TODO add your handling code here:
     }                                       
     catch (SQLException ex) {
          JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
-           Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+           Logger.getLogger(ViewProducto.class.getName()).log(Level.SEVERE, null, ex);
           
        }
-       
+            mostrar("producto");
+            limpiar();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_GuardarBtnActionPerformed
 
@@ -462,6 +536,16 @@ Connection cn = cnn.conectar();
         // TODO add your handling code here:
     }//GEN-LAST:event_idproveedorActionPerformed
 
+    private void viewProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductoMouseClicked
+
+        DefaultTableModel model = (DefaultTableModel) viewProducto.getModel();
+        idproducto.setText(model.getValueAt(viewProducto.getSelectedRow(),0)+"");
+        nombreproduct.setText(model.getValueAt(viewProducto.getSelectedRow(),1)+"");
+        costoproduct.setText(model.getValueAt(viewProducto.getSelectedRow(),2)+"");
+        cantidadproduct.setText(model.getValueAt(viewProducto.getSelectedRow(),3)+"");
+        idproveedor.setText(model.getValueAt(viewProducto.getSelectedRow(),4)+"");
+    }//GEN-LAST:event_viewProductoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -479,20 +563,21 @@ Connection cn = cnn.conectar();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Producto().setVisible(true);
+                new ViewProducto().setVisible(true);
             }
         });
     }
