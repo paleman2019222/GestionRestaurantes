@@ -68,11 +68,15 @@ public class Proveedor extends javax.swing.JFrame {
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 390, -1));
 
         jTextField1.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setBorder(null);
+        jTextField1.setCaretColor(new java.awt.Color(255, 255, 255));
         jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 160, 20));
 
         jTextField2.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setBorder(null);
+        jTextField2.setCaretColor(new java.awt.Color(255, 255, 255));
         jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 160, -1));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
@@ -84,14 +88,17 @@ public class Proveedor extends javax.swing.JFrame {
 
         jButton1.setText("Guardar");
         jButton1.setBorder(null);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, 90, 30));
 
         jButton2.setText("Editar");
         jButton2.setBorder(null);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 90, 30));
 
         jButton3.setText("Eliminar");
         jButton3.setBorder(null);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 460, 90, 30));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N

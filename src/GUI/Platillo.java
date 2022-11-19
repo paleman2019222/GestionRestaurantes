@@ -83,12 +83,15 @@ public class Platillo extends javax.swing.JFrame {
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 390, -1));
 
         Guardar.setText("Guardar");
+        Guardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, 90, 30));
 
         jButton2.setText("Editar");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 480, 90, 30));
 
         jButton3.setText("Eliminar");
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 90, 30));
 
         jTextField1.setBackground(new java.awt.Color(0, 0, 0));
@@ -101,13 +104,13 @@ public class Platillo extends javax.swing.JFrame {
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setBorder(null);
         jTextField2.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 270, 180, 20));
+        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 270, 170, 20));
 
         jTextField3.setBackground(new java.awt.Color(0, 0, 0));
         jTextField3.setForeground(new java.awt.Color(255, 255, 255));
         jTextField3.setBorder(null);
         jTextField3.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 390, 180, 20));
+        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 390, 170, 20));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 180, 20));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 180, 20));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, 180, 20));
@@ -116,13 +119,13 @@ public class Platillo extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre", "Precio"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

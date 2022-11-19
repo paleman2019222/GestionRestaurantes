@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -48,6 +49,11 @@ public class Puesto extends javax.swing.JFrame {
         }
     }
     
+    void limpiar(){
+        txtidpuesto.setText(null);
+        txtpuesto.setText(null);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +69,7 @@ public class Puesto extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Guardar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Editar = new javax.swing.JButton();
         Eliminar = new javax.swing.JButton();
         txtidpuesto = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -106,6 +112,7 @@ public class Puesto extends javax.swing.JFrame {
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 390, -1));
 
         Guardar.setText("Guardar");
+        Guardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardarActionPerformed(evt);
@@ -113,10 +120,17 @@ public class Puesto extends javax.swing.JFrame {
         });
         jPanel2.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 90, 30));
 
-        jButton2.setText("Editar");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, 90, 30));
+        Editar.setText("Editar");
+        Editar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, 90, 30));
 
         Eliminar.setText("Eliminar");
+        Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EliminarActionPerformed(evt);
@@ -125,12 +139,16 @@ public class Puesto extends javax.swing.JFrame {
         jPanel2.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 90, 30));
 
         txtidpuesto.setBackground(new java.awt.Color(0, 0, 0));
+        txtidpuesto.setForeground(new java.awt.Color(255, 255, 255));
         txtidpuesto.setBorder(null);
+        txtidpuesto.setCaretColor(new java.awt.Color(255, 255, 255));
         jPanel2.add(txtidpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 170, -1));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 170, 20));
 
         txtpuesto.setBackground(new java.awt.Color(0, 0, 0));
+        txtpuesto.setForeground(new java.awt.Color(255, 255, 255));
         txtpuesto.setBorder(null);
+        txtpuesto.setCaretColor(new java.awt.Color(255, 255, 255));
         jPanel2.add(txtpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, 170, -1));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 380, -1, -1));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, 170, 20));
@@ -139,15 +157,20 @@ public class Puesto extends javax.swing.JFrame {
 
         Visor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Puesto"
             }
         ));
+        Visor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VisorMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Visor);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 410, 400));
@@ -174,7 +197,7 @@ public class Puesto extends javax.swing.JFrame {
             pps.setInt(1,id);
             pps.setString(2,txtpuesto.getText());
             pps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Se guardaron los datos");
+            JOptionPane.showMessageDialog(null, "Se han registrado los datos");
         }                                       
         catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
@@ -205,6 +228,32 @@ public class Puesto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Seleccionar fila");
         }
     }//GEN-LAST:event_EliminarActionPerformed
+
+    private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
+       Connection cn = cnn.conectar();
+        
+        try {
+            String sql = "CALL MODIFICAR_CLIENTE (?,?)";
+            PreparedStatement pps = cn.prepareCall(sql);
+            pps.setString(1,txtidpuesto.getText());
+            pps.setString(2,txtpuesto.getText());
+            
+            pps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Se han modificado los datos");
+        }                                       
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
+            Logger.getLogger(Puesto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        limpiar();
+    }//GEN-LAST:event_EditarActionPerformed
+
+    private void VisorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VisorMouseClicked
+        DefaultTableModel model = (DefaultTableModel) Visor.getModel();
+        txtidpuesto.setText(model.getValueAt(Visor.getSelectedRow(),0)+"");
+        txtpuesto.setText(model.getValueAt(Visor.getSelectedRow(),1)+"");
+    }//GEN-LAST:event_VisorMouseClicked
 
     /**
      * @param args the command line arguments
@@ -245,10 +294,10 @@ public class Puesto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Editar;
     private javax.swing.JButton Eliminar;
     private javax.swing.JButton Guardar;
     private javax.swing.JTable Visor;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
