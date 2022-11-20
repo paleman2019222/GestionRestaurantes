@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -91,12 +92,24 @@ private int idProveedor;
     }
    //prueba
 
-
+       public void cargarComboBox(JComboBox Tboxidproveedor){
+        try{
+        PreparedStatement  consulta = cn.prepareStatement("SELECT nombreProveedor from proveedor");
+      ResultSet rs = consulta.executeQuery();
+      
+        while(rs.next()){
+            Tboxidproveedor.addItem(rs.getString("nombreProveedor"));
+        }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    
+    }
      public void mostrar(JTable TableProducto){
         DefaultTableModel modelProducto = new DefaultTableModel ();
        // String []datos = new String [4]; 
         
-        String sql = "select * from producto";
+        String sql = "SELECT producto.idproducto,producto.nombreProducto, producto.costoProducto, producto.cantidadProducto, proveedor.nombreProveedor FROM producto, proveedor where producto.idProveedor = proveedor.idProveedor";
         Statement st;
         modelProducto.addColumn("ID");
         modelProducto.addColumn("Nombre producto");
@@ -124,21 +137,35 @@ private int idProveedor;
         }
     }
      
-        public void GuardarRegistro(JTextField nombreproduct, JTextField costoproduct, JTextField cantidadproduct, JTextField idproveedor){
+        public void GuardarRegistro(JTextField nombreproduct, JTextField costoproduct, JTextField cantidadproduct, JComboBox Tboxidproveedor){
+                       cn = cnn.conectar();
         Producto producto = new Producto ();
         producto.setNombreProducto(nombreproduct.getText());
-        String sql= "INSERT INTO producto (nombreProducto, costoProducto, cantidadProducto, idproveedor) values (?, ?, ?, ?)";
-        
+        producto.setCostoProducto(Double.parseDouble(costoproduct.getText()));
+        producto.setCantidadProducto(Integer.parseInt (cantidadproduct.getText()));
+        int g= 0;
+            try {
+                PreparedStatement  consulta = cn.prepareStatement("select idproveedor from proveedor where nombreProveedor ='"+Tboxidproveedor.getSelectedItem()+"'");
+                ResultSet p = consulta.executeQuery();
+                    
+                while(p.next()){
+                     g=p.getInt(1);
+                    }                   
+                } catch (SQLException ex) {
+                    Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    String sql= "INSERT INTO producto (nombreProducto, costoProducto, cantidadProducto, idproveedor) values (?, ?, ?, ?)";
+
         try {
             PreparedStatement consulta = cn.prepareStatement(sql);
             double costo = Double.parseDouble(costoproduct.getText());
             int cantidad = Integer.parseInt (cantidadproduct.getText());
-            int proveedor = Integer.parseInt (idproveedor.getText());    
+          //  int proveedor = Integer.parseInt (idproveedor.getText());    
                 
                 consulta.setString(1,nombreproduct.getText());
                 consulta.setDouble(2,costo);
                 consulta.setInt(3,cantidad);
-                consulta.setInt(4, proveedor);
+                consulta.setInt(4, g);
             
             consulta.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se han registrado los datos");
@@ -148,19 +175,31 @@ private int idProveedor;
             JOptionPane.showMessageDialog(null, "Error al guardar los datos: "+ex.toString());
             Logger.getLogger(ViewProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+
+        
     }
         
-       public void modificarRegistro(JTextField idproducto, JTextField nombreproduct, JTextField costoproduct, JTextField cantidadproduct, JTextField idproveedor){
+       public void modificarRegistro(JTextField idproducto, JTextField nombreproduct, JTextField costoproduct, JTextField cantidadproduct, JComboBox Tboxidproveedor){
         Producto producto = new Producto ();
-        producto.setIdproducto(Integer.parseInt(idproducto.getText()));
-        double costo = Double.parseDouble(costoproduct.getText());
-        int cantidad = Integer.parseInt (cantidadproduct.getText());
-        int proveedor = Integer.parseInt (idproveedor.getText()); 
-        
+        producto.setIdproducto(Integer.parseInt(idproducto.getText()));        
         producto.setNombreProducto(nombreproduct.getText());
-        producto.setCostoProducto(costo);
-        producto.setCantidadProducto(cantidad);
-        producto.setIdProveedor(proveedor);
+        producto.setCostoProducto(Double.parseDouble(costoproduct.getText()));
+        producto.setCantidadProducto(Integer.parseInt (cantidadproduct.getText()));
+        
+                
+                 int g= 0;
+            try {
+                PreparedStatement  consulta = cn.prepareStatement("select idproveedor from proveedor where nombreProveedor ='"+Tboxidproveedor.getSelectedItem()+"'");
+                ResultSet p = consulta.executeQuery();
+                    
+                    while(p.next()){
+                        g=p.getInt(1);
+                    }
+                   
+                } catch (SQLException ex) {
+                    Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
         String sql= "UPDATE producto SET producto.nombreProducto = ?, producto.costoProducto = ?, producto.cantidadProducto = ?, producto.idProveedor = ? WHERE producto.idproducto = ?";
         
@@ -170,7 +209,7 @@ private int idProveedor;
             consulta.setString(1, producto.getNombreProducto());
             consulta.setDouble(2, producto.getCostoProducto());
             consulta.setInt(3,producto.getCantidadProducto());
-            consulta.setInt(4, producto.getIdProveedor());
+            consulta.setInt(4,g);
             consulta.setInt(5, producto.getIdproducto());
 
             consulta.executeUpdate();
@@ -205,6 +244,6 @@ private int idProveedor;
           JOptionPane.showMessageDialog(null,"Seleccionar fila");
       }
     }
-  
+
     
 }
