@@ -119,7 +119,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
         boxPuesto = new javax.swing.JComboBox<>();
-        Actualizar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -133,7 +132,7 @@ public class EmpleadoView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Producto");
+        jLabel1.setText("Empleado");
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 940, 100));
 
@@ -339,6 +338,11 @@ public class EmpleadoView extends javax.swing.JFrame {
         btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 670, 90, 30));
 
         btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
@@ -373,18 +377,6 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 730));
 
-        Actualizar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        Actualizar.setForeground(new java.awt.Color(0, 0, 0));
-        Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sincronizar.png"))); // NOI18N
-        Actualizar.setText("Actualizar");
-        Actualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Actualizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ActualizarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, 110, 40));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1320, 730));
 
         pack();
@@ -395,10 +387,6 @@ public class EmpleadoView extends javax.swing.JFrame {
     emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
         emp.mostrar(TblEmpleado);
     }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void ActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ActualizarMouseClicked
- 
-    }//GEN-LAST:event_ActualizarMouseClicked
 
              
      
@@ -421,6 +409,11 @@ public class EmpleadoView extends javax.swing.JFrame {
         emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
         emp.mostrar(TblEmpleado);
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        emp.eliminar(TblEmpleado);
+        emp.mostrar(TblEmpleado);
+    }//GEN-LAST:event_btnEliminarActionPerformed
     
     /**
      * @param args the command line arguments
@@ -433,7 +426,6 @@ public class EmpleadoView extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Actualizar;
     private javax.swing.JTable TblEmpleado;
     private javax.swing.JComboBox<String> boxPuesto;
     private javax.swing.JButton btnEditar;
