@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -81,13 +80,13 @@ public class Puesto {
     }
     
     public void nuevoRegistro(JTextField txtpuesto){
-        Puesto puesto = new Puesto ();
-        puesto.setPuesto(txtpuesto.getText());
+        Puesto obpuesto = new Puesto ();
+        obpuesto.setPuesto(txtpuesto.getText());
         String sql= "INSERT INTO puesto (puesto) values (?)";
         
         try {
             PreparedStatement consulta = cn.prepareStatement(sql);
-            consulta.setString(1, puesto.getPuesto());
+            consulta.setString(1, obpuesto.getPuesto());
             
             consulta.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se han registrado los datos");
@@ -103,7 +102,7 @@ public class Puesto {
         Puesto puesto = new Puesto ();
         puesto.setIdpuesto(Integer.parseInt(txtidpuesto.getText()));
         puesto.setPuesto(txtpuesto.getText());
-        String sql= "UPDATE puesto SET puesto.puesto = ? WHERE puesto.idpuesto = ?";
+        String sql = "UPDATE puesto SET puesto.puesto = ? WHERE puesto.idpuesto = ?";
         
         try {
             PreparedStatement consulta = cn.prepareStatement(sql);
@@ -120,4 +119,28 @@ public class Puesto {
             Logger.getLogger(PuestoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void borrarRegistro(JTable TablePuesto){
+        DefaultTableModel modelPuesto = new DefaultTableModel ();
+        int fila = TablePuesto.getSelectedRow();
+        String valor = TablePuesto.getValueAt(fila, 0).toString();
+        
+        if( fila >= 0){
+            try{
+                PreparedStatement ps = cn.prepareStatement("Delete FROM puesto Where idpuesto = '"+valor+"'");
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null,"Dato Eliminado");
+                modelPuesto.removeTableModelListener(TablePuesto);
+                modelPuesto.getDataVector().removeAllElements();
+                TablePuesto.updateUI();
+                
+            } catch (SQLException ex) { 
+                JOptionPane.showMessageDialog(null,"Error al eliminar los datos: "+ex.toString());
+                Logger.getLogger(PuestoView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,"Seleccionar fila");
+        }
+    }
 }
+

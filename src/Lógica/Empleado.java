@@ -282,6 +282,28 @@ public class Empleado {
     }
     
     
+      public void eliminar(JTable TableEmpleado){
+        DefaultTableModel modelProducto= new DefaultTableModel ();
+        int fila = TableEmpleado.getSelectedRow();
+        String valor = TableEmpleado.getValueAt(fila, 0).toString();
+        if( fila >= 0){
+          try{
+            PreparedStatement ps = cn.prepareStatement("Delete FROM empleado Where idempleado = '"+valor+"'");
+               ps.executeUpdate();
+                JOptionPane.showMessageDialog(null,"Dato Eliminado");
+                 modelProducto.removeTableModelListener(TableEmpleado);
+                 modelProducto.getDataVector().removeAllElements();
+                 TableEmpleado.updateUI();
+                
+          } catch (SQLException ex) { 
+             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        
+      } else {
+          JOptionPane.showMessageDialog(null,"Seleccionar fila");
+      }
+    }    
+        
     @Override
     public String toString() {
         return "Empleado{" + "idEmpleado=" + idEmpleado + ", nombreEmpleado=" + nombreEmpleado + ", apellidoEmpleado=" + apellidoEmpleado + ", usuarioEmpleado=" + usuarioEmpleado + ", telefonoUsuario=" + telefonoUsuario + ", direccionEmpleado=" + direccionEmpleado + ", sueldoEmpleado=" + sueldoEmpleado + ", idPuesto=" + idPuesto + '}';

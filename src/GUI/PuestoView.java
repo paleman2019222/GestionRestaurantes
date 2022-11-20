@@ -1,29 +1,16 @@
 package GUI;
 import Lógica.Puesto;
-import Persistencia.Conexion;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author 50236
  */
 public class PuestoView extends javax.swing.JFrame {
-    Conexion cnn = new Conexion ();
-    Connection cc;
     Puesto op = new Puesto();
-    
+
     public PuestoView() {
         initComponents();
-        //this.setLocationRelativeTo(null);
-        txtidpuesto.setEnabled(false);
+        txtidpuesto.setEditable(false);
         op.mostrar(TablePuesto);
     }
 
@@ -31,7 +18,7 @@ public class PuestoView extends javax.swing.JFrame {
         txtidpuesto.setText(null);
         txtpuesto.setText(null);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +45,8 @@ public class PuestoView extends javax.swing.JFrame {
         TablePuesto = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -116,12 +105,11 @@ public class PuestoView extends javax.swing.JFrame {
         });
         jPanel2.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 90, 30));
 
-        txtidpuesto.setEditable(false);
         txtidpuesto.setBackground(new java.awt.Color(0, 0, 0));
         txtidpuesto.setForeground(new java.awt.Color(255, 255, 255));
         txtidpuesto.setBorder(null);
         txtidpuesto.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtidpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 170, 20));
+        jPanel2.add(txtidpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 170, -1));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 170, 20));
 
         txtpuesto.setBackground(new java.awt.Color(0, 0, 0));
@@ -157,10 +145,32 @@ public class PuestoView extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Puesto");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 310, 50));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 360, 50));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Empleado.png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, -1));
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hogar (30px).png"))); // NOI18N
+        jLabel7.setText("Menú");
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 70, 30));
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar-sesion (27px).png"))); // NOI18N
+        jLabel10.setText(" Salir");
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, 60, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
@@ -174,25 +184,9 @@ public class PuestoView extends javax.swing.JFrame {
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        /*int fila = TablePuesto.getSelectedRow();
-        String valorId = TablePuesto.getValueAt(fila, 0).toString();
-        if( fila >= 0){
-            try{
-                PreparedStatement pps = cc.prepareStatement("Delete FROM puesto Where idpuesto = '"+valorId+"'");
-                pps.executeUpdate();
-                JOptionPane.showMessageDialog(null,"Se elimino el dato");
-                modelPuesto.removeTableModelListener(TablePuesto);
-                modelPuesto.getDataVector().removeAllElements();
-                TablePuesto.updateUI();
-                
-                mostrar ("puesto");
-            } catch (SQLException ex) { 
-                Logger.getLogger(PuestoView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-        } else {
-            JOptionPane.showMessageDialog(null,"Seleccionar fila");
-        }*/
+        op.borrarRegistro(TablePuesto);
+        op.mostrar(TablePuesto);
+        limpiar();
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
@@ -202,10 +196,20 @@ public class PuestoView extends javax.swing.JFrame {
     }//GEN-LAST:event_EditarActionPerformed
 
     private void TablePuestoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablePuestoMouseClicked
-        DefaultTableModel model = (DefaultTableModel) TablePuesto.getModel();
-        txtidpuesto.setText(model.getValueAt(TablePuesto.getSelectedRow(),0)+"");
-        txtpuesto.setText(model.getValueAt(TablePuesto.getSelectedRow(),1)+"");
+        DefaultTableModel modelPuesto = (DefaultTableModel) TablePuesto.getModel();
+        txtidpuesto.setText(modelPuesto.getValueAt(TablePuesto.getSelectedRow(),0)+"");
+        txtpuesto.setText(modelPuesto.getValueAt(TablePuesto.getSelectedRow(),1)+"");
     }//GEN-LAST:event_TablePuestoMouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        Menu mn = new Menu();
+            mn.setVisible(true);
+            this.setVisible(false);
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -255,10 +259,12 @@ public class PuestoView extends javax.swing.JFrame {
     private javax.swing.JButton Guardar;
     private javax.swing.JTable TablePuesto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
