@@ -436,6 +436,7 @@ public class ViewProducto extends javax.swing.JFrame {
             } else{
                 int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
                 if(resp ==0){
+                   // validarRegistros();
                     op.modificarRegistro(idproducto, nombreproduct, costoproduct, cantidadproduct, Tboxidproveedor);
                     op.modificarRegistro(idproducto, nombreproduct, costoproduct, cantidadproduct, Tboxidproveedor);
                     op.mostrar(TableProducto);
@@ -445,6 +446,25 @@ public class ViewProducto extends javax.swing.JFrame {
      }
     
     }//GEN-LAST:event_btnEditarActionPerformed
+    public void llenarDatos(){
+        Object ob [] = new Object[4];
+        ob[0]=nombreproduct.getText();
+        ob[1]=costoproduct.getText();
+        ob[2]=cantidadproduct.getText();
+        ob[3]=Tboxidproveedor.getSelectedItem();
+
+    }
+
+    public void validarRegistros (){
+        DefaultTableModel modelPuesto = new DefaultTableModel ();
+        for (int i=0; i<TableProducto.getRowCount(); i++){
+            if (TableProducto.getValueAt(i, 4).equals(nombreproduct.getText())){
+                JOptionPane.showMessageDialog(null, "El puesto ya está registrado");
+                modelPuesto.removeRow(i);
+            }
+        }
+        llenarDatos();
+    }
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
      int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro seleccionado?");
@@ -458,8 +478,10 @@ public class ViewProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-     if(nombreproduct.getText().equals("") || costoproduct.getText().equals("") || cantidadproduct.getText().equals("") ||Tboxidproveedor.getSelectedItem().equals("")){
-         JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
+        
+       if(nombreproduct.getText().equals("") || costoproduct.getText().equals("") || cantidadproduct.getText().equals("") ||Tboxidproveedor.getSelectedItem().equals("")){
+            
+            JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
      } else{
          String x = costoproduct.getText();
          String y = cantidadproduct.getText();
@@ -469,6 +491,7 @@ public class ViewProducto extends javax.swing.JFrame {
          }else if(isNumeric(y)==false){
              JOptionPane.showMessageDialog(null, "El campo cantidad el producto debe contener únicamente números enteros, intentelo de nuevo por favor.");
          }else{
+          //   validarRegistros();
              op.GuardarRegistro(nombreproduct, costoproduct, cantidadproduct, Tboxidproveedor);
              op.mostrar(TableProducto);
              limpiar();

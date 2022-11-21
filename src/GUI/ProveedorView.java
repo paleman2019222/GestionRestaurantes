@@ -1,4 +1,5 @@
 package GUI;
+import Lógica.Empleado;
 import Lógica.Proveedor;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -10,20 +11,50 @@ import javax.swing.table.DefaultTableModel;
 
 public class ProveedorView extends javax.swing.JFrame {
     Proveedor op = new Proveedor();
+    Empleado mod;
     /**
      * Creates new form ProveedorVista
      */
     public ProveedorView() {
-        initComponents();
+        initComponents();     
         txtidproveedor.setEditable(false);
         op.mostrar(TableProveedor);
         Eliminar.setEnabled(false);
         Editar.setEnabled(false);
     }
     
+    public ProveedorView(Empleado mod){
+        initComponents();
+        setLocationRelativeTo(null);
+        txtidproveedor.setEditable(false);
+        op.mostrar(TableProveedor);
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
+        this.mod = mod;
+        mod.getPuesto();
+        mod.getNombreEmpleado();
+        System.out.println(mod.getNombreEmpleado());
+    }
+    
     void limpiar(){
         txtidproveedor.setText(null);
         txtnombreproveedor.setText(null);
+    }
+    
+    public void llenarDatos(){
+        Object ob [] = new Object[1];
+        ob[0]=txtnombreproveedor.getText();
+    }
+
+    public void validarRegistros (){
+        DefaultTableModel modelPuesto = new DefaultTableModel ();
+        for (int i=0; i<TableProveedor.getRowCount(); i++){
+            if (TableProveedor.getValueAt(i, 1).equals(txtnombreproveedor.getText())){
+                JOptionPane.showMessageDialog(null, "El proveedor ya está registrado");
+                modelPuesto.removeRow(i);
+            }
+        }
+        llenarDatos();
     }
 
     /**
@@ -193,6 +224,7 @@ public class ProveedorView extends javax.swing.JFrame {
         if(txtnombreproveedor.getText().equals("")){
             JOptionPane.showMessageDialog(null, "El campo está vacio, verifique su información e inténtelo de nuevo");
         }else{
+            validarRegistros();
             op.nuevoRegistro(txtnombreproveedor);
         op.mostrar(TableProveedor);
         limpiar();   
@@ -205,6 +237,7 @@ public class ProveedorView extends javax.swing.JFrame {
         } else{
             int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
             if(resp ==0){
+                validarRegistros();
                 op.modificarRegistro(txtidproveedor, txtnombreproveedor);
                 op.mostrar(TableProveedor);
                 limpiar();
@@ -241,7 +274,7 @@ public class ProveedorView extends javax.swing.JFrame {
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
         if(resp ==0){
-            Menu mn = new Menu();
+            Menu mn = new Menu(mod);
             mn.setVisible(true);
             this.setVisible(false); 
        }

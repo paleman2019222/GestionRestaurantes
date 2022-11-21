@@ -224,7 +224,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnPuestoViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuestoViewActionPerformed
         // TODO add your handling code here:
-         PuestoView mn = new PuestoView();
+         PuestoView mn = new PuestoView(mod);
         mn.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnPuestoViewActionPerformed
@@ -269,7 +269,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnProveedorViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedorViewMouseClicked
         // TODO add your handling code here:
-         ProveedorView mn = new ProveedorView();
+         ProveedorView mn = new ProveedorView(mod);
         mn.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnProveedorViewMouseClicked

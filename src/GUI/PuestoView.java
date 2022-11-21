@@ -1,5 +1,6 @@
 package GUI;
 import Lógica.Puesto;
+import Lógica.Empleado;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -8,16 +9,43 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PuestoView extends javax.swing.JFrame {
     Puesto op = new Puesto();
+    Empleado mod;
 
     public PuestoView() {
         initComponents();
         txtidpuesto.setEditable(false);
         op.mostrar(TablePuesto);
     }
+    
+    public PuestoView(Empleado mod) {
+        initComponents();
+        txtidpuesto.setEditable(false);
+        op.mostrar(TablePuesto);
+        this.mod = mod;
+        mod.getPuesto();
+        mod.getNombreEmpleado();
+        System.out.println(mod.getNombreEmpleado());
+    }
 
     void limpiar(){
         txtidpuesto.setText(null);
         txtpuesto.setText(null);
+    }
+    
+    public void llenarDatos(){
+        Object ob [] = new Object[1];
+        ob[0]=txtpuesto.getText();
+    }
+
+    public void validarRegistros (){
+        DefaultTableModel modelPuesto = new DefaultTableModel ();
+        for (int i=0; i<TablePuesto.getRowCount(); i++){
+            if (TablePuesto.getValueAt(i, 1).equals(txtpuesto.getText())){
+                JOptionPane.showMessageDialog(null, "El puesto ya está registrado");
+                modelPuesto.removeRow(i);
+            }
+        }
+        llenarDatos();
     }
 
     /**
@@ -163,6 +191,7 @@ public class PuestoView extends javax.swing.JFrame {
         if(txtpuesto.getText().equals("")){
             JOptionPane.showMessageDialog(null, "El campo está vacio, verifique su información e inténtelo de nuevo");
         }else{
+            validarRegistros();
             op.nuevoRegistro(txtpuesto);
             op.mostrar(TablePuesto);
             limpiar();    

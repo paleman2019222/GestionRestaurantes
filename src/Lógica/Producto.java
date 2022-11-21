@@ -180,7 +180,7 @@ private int idProveedor;
         
     }
         
-       public void modificarRegistro(JTextField idproducto, JTextField nombreproduct, JTextField costoproduct, JTextField cantidadproduct, JComboBox Tboxidproveedor){
+    public void modificarRegistro(JTextField idproducto, JTextField nombreproduct, JTextField costoproduct, JTextField cantidadproduct, JComboBox Tboxidproveedor){
         Producto producto = new Producto ();
         producto.setIdproducto(Integer.parseInt(idproducto.getText()));        
         producto.setNombreProducto(nombreproduct.getText());
