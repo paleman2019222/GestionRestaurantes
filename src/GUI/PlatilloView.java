@@ -14,6 +14,8 @@ public class PlatilloView extends javax.swing.JFrame {
         initComponents();
         txtIdPlatillo.setEditable(false);
         op.mostrar(TablePlatillo);
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
     }
     
     void limpiar(){
@@ -235,6 +237,10 @@ public class PlatilloView extends javax.swing.JFrame {
                 }
             }
         }
+        
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
+        Guardar.setEnabled(true); 
     }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
@@ -244,6 +250,10 @@ public class PlatilloView extends javax.swing.JFrame {
             op.mostrar(TablePlatillo);
             limpiar();
         } 
+        
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
+        Guardar.setEnabled(true);
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void TablePlatilloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablePlatilloMouseClicked
@@ -251,6 +261,9 @@ public class PlatilloView extends javax.swing.JFrame {
         txtIdPlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),0)+"");
         txtNombrePlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),1)+"");
         txtPrecioPlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),2)+"");
+        Guardar.setEnabled(false);
+        Eliminar.setEnabled(true);
+        Editar.setEnabled(true);
     }//GEN-LAST:event_TablePlatilloMouseClicked
 
     private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked

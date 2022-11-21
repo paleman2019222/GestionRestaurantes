@@ -17,6 +17,8 @@ public class ProveedorView extends javax.swing.JFrame {
         initComponents();
         txtidproveedor.setEditable(false);
         op.mostrar(TableProveedor);
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
     }
     
     void limpiar(){
@@ -106,7 +108,7 @@ public class ProveedorView extends javax.swing.JFrame {
         });
         jPanel2.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 90, 30));
 
-        Editar.setText("Editar");
+        Editar.setText("Actualizar");
         Editar.setBorder(null);
         Editar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Editar.addActionListener(new java.awt.event.ActionListener() {
@@ -208,6 +210,10 @@ public class ProveedorView extends javax.swing.JFrame {
                 limpiar();
                 }
             }
+        
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
+        Guardar.setEnabled(true); 
     }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
@@ -217,12 +223,19 @@ public class ProveedorView extends javax.swing.JFrame {
             op.mostrar(TableProveedor);
             limpiar();
         } 
+        
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
+        Guardar.setEnabled(true);
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void TableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProveedorMouseClicked
         DefaultTableModel modelProveedor = (DefaultTableModel) TableProveedor.getModel();
         txtidproveedor.setText(modelProveedor.getValueAt(TableProveedor.getSelectedRow(),0)+"");
         txtnombreproveedor.setText(modelProveedor.getValueAt(TableProveedor.getSelectedRow(),1)+"");
+        Guardar.setEnabled(false);
+        Eliminar.setEnabled(true);
+        Editar.setEnabled(true);
     }//GEN-LAST:event_TableProveedorMouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
