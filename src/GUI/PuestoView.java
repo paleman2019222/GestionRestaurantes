@@ -1,4 +1,5 @@
 package GUI;
+import Lógica.Empleado;
 import Lógica.Puesto;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -8,11 +9,20 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PuestoView extends javax.swing.JFrame {
     Puesto op = new Puesto();
-
-    public PuestoView() {
+    Empleado mod;
+       
+    public PuestoView(Empleado mod) {
         initComponents();
         txtidpuesto.setEditable(false);
         op.mostrar(TablePuesto);
+        this.mod = mod;
+        mod.getPuesto();
+        mod.getNombreEmpleado();
+         System.out.println(mod.getNombreEmpleado());
+    }
+
+
+    PuestoView() {
     }
 
     void limpiar(){
@@ -183,12 +193,12 @@ public class PuestoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
-        if(resp ==0){
-            Menu mn = new Menu();
-            mn.setVisible(true);
-            this.setVisible(false); 
-       }  
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");   
+        if(resp ==0){        
+        Menu mn = new Menu(mod);
+        mn.setVisible(true);
+        this.setVisible(false); 
+       }    
     }//GEN-LAST:event_jLabel7MouseClicked
 
     /**

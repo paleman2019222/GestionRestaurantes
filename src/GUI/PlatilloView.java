@@ -1,4 +1,5 @@
 package GUI;
+import Lógica.Empleado;
 import Lógica.Platillo;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -9,13 +10,23 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PlatilloView extends javax.swing.JFrame {
     Platillo op = new Platillo();
+    Empleado mod;
     
-    public PlatilloView() {
+    public PlatilloView(Empleado mod) {
         initComponents();
         txtIdPlatillo.setEditable(false);
         op.mostrar(TablePlatillo);
         Eliminar.setEnabled(false);
         Editar.setEnabled(false);
+        this.mod = mod;
+        mod.getPuesto();
+        mod.getNombreEmpleado();
+        System.out.println(mod.getNombreEmpleado());
+    }
+
+
+    PlatilloView() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     void limpiar(){
@@ -261,9 +272,6 @@ public class PlatilloView extends javax.swing.JFrame {
         txtIdPlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),0)+"");
         txtNombrePlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),1)+"");
         txtPrecioPlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),2)+"");
-        Guardar.setEnabled(false);
-        Eliminar.setEnabled(true);
-        Editar.setEnabled(true);
     }//GEN-LAST:event_TablePlatilloMouseClicked
 
     private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked
@@ -274,12 +282,12 @@ public class PlatilloView extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirMouseClicked
 
     private void MenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseClicked
-        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
-        if(resp ==0){
-            Menu mn = new Menu();
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");   
+        if(resp ==0){        
+            Menu mn = new Menu(mod);
             mn.setVisible(true);
             this.setVisible(false); 
-        }  
+       }
     }//GEN-LAST:event_MenuMouseClicked
 
     /**
