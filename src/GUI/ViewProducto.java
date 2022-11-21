@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import Lógica.Empleado;
 import Persistencia.Conexion;
 import Lógica.Producto;
 import java.sql.Connection;
@@ -14,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ViewProducto extends javax.swing.JFrame {      
    Producto op = new Producto();
-
+Empleado mod;
     /**
      * Creates new form Producto
      */
@@ -24,6 +25,21 @@ public class ViewProducto extends javax.swing.JFrame {
         op.mostrar(TableProducto);
         op.cargarComboBox(Tboxidproveedor);
     }
+    
+     public ViewProducto(Empleado mod){
+         initComponents();
+         setLocationRelativeTo(null);
+        idproducto.setEditable(false);
+        op.mostrar(TableProducto);
+        op.cargarComboBox(Tboxidproveedor);
+        this.mod = mod;
+        mod.getPuesto();
+        mod.getNombreEmpleado();
+         System.out.println(mod.getNombreEmpleado());
+        }
+        
+        
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -425,7 +441,7 @@ public class ViewProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_TableProductoMouseClicked
 
     private void MenúMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenúMouseClicked
-        Menu mn = new Menu();
+        Menu mn = new Menu(mod);
         mn.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_MenúMouseClicked
