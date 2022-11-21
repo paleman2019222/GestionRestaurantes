@@ -1,4 +1,5 @@
 package GUI;
+import Lógica.Empleado;
 import Lógica.Platillo;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -9,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PlatilloView extends javax.swing.JFrame {
     Platillo op = new Platillo();
+    Empleado mod;
     
     public PlatilloView() {
         initComponents();
@@ -17,11 +19,40 @@ public class PlatilloView extends javax.swing.JFrame {
         Eliminar.setEnabled(false);
         Editar.setEnabled(false);
     }
+
+    PlatilloView(Empleado mod) {
+        initComponents();
+        txtIdPlatillo.setEditable(false);
+        op.mostrar(TablePlatillo);
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
+        this.mod = mod;
+        mod.getPuesto();
+        mod.getNombreEmpleado();
+        System.out.println(mod.getNombreEmpleado());    
+    }
     
     void limpiar(){
         txtIdPlatillo.setText(null);
         txtNombrePlatillo.setText(null);
         txtPrecioPlatillo.setText(null);
+    }
+    
+    public void llenarDatos(){
+        Object ob [] = new Object[2];
+        ob[0]=txtNombrePlatillo.getText();
+        ob[0]=txtPrecioPlatillo.getText();
+    }
+
+    public void validarRegistros (){
+        DefaultTableModel modelPuesto = new DefaultTableModel ();
+        for (int i=0; i<TablePlatillo.getRowCount(); i++){
+            if (TablePlatillo.getValueAt(i, 2).equals(txtNombrePlatillo.getText())){
+                JOptionPane.showMessageDialog(null, "El puesto ya está registrado");
+                modelPuesto.removeRow(i);
+            }
+        }
+        llenarDatos();
     }
       
     private boolean isDouble(String cadena) {
@@ -214,6 +245,7 @@ public class PlatilloView extends javax.swing.JFrame {
             if(isDouble(x)==false){
                 JOptionPane.showMessageDialog(null, "El campo de precio debe contener únicamente números, intentelo de nuevo por favor.");
             }else{
+                validarRegistros();
                 op.nuevoRegistro(txtNombrePlatillo, txtPrecioPlatillo);
                 op.mostrar(TablePlatillo);
                 limpiar();   
@@ -231,6 +263,7 @@ public class PlatilloView extends javax.swing.JFrame {
             }else{
                 int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
                 if(resp ==0){
+                    validarRegistros();
                     op.modificarRegistro(txtIdPlatillo, txtNombrePlatillo, txtPrecioPlatillo);
                     op.mostrar(TablePlatillo);
                     limpiar();
@@ -261,9 +294,6 @@ public class PlatilloView extends javax.swing.JFrame {
         txtIdPlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),0)+"");
         txtNombrePlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),1)+"");
         txtPrecioPlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),2)+"");
-        Guardar.setEnabled(false);
-        Eliminar.setEnabled(true);
-        Editar.setEnabled(true);
     }//GEN-LAST:event_TablePlatilloMouseClicked
 
     private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked
@@ -274,12 +304,12 @@ public class PlatilloView extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirMouseClicked
 
     private void MenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseClicked
-        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
-        if(resp ==0){
-            Menu mn = new Menu();
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");   
+        if(resp ==0){        
+            Menu mn = new Menu(mod);
             mn.setVisible(true);
             this.setVisible(false); 
-        }  
+       }
     }//GEN-LAST:event_MenuMouseClicked
 
     /**
