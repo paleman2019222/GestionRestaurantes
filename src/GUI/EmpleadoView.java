@@ -526,12 +526,12 @@ public class EmpleadoView extends javax.swing.JFrame {
 
     private void MenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseClicked
         
-          int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
-       if(resp ==0){
-            Menu mn = new Menu();
-        mn.setVisible(true);
-        this.setVisible(false); 
-       }   
+            int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
+         if(resp ==0){
+              Menu mn = new Menu();
+          mn.setVisible(true);
+          this.setVisible(false); 
+         }   
         
       
     }//GEN-LAST:event_MenuMouseClicked

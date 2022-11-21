@@ -1,5 +1,6 @@
 package Lógica;
 
+//Librerias a utilizar
 import GUI.PuestoView;
 import Persistencia.Conexion;
 import java.sql.Connection;
@@ -19,8 +20,11 @@ import javax.swing.table.DefaultTableModel;
  * @author 50236
  */
 public class Puesto {
+    //Variables 
     private int idpuesto;
     private String puesto;
+    
+    //Conexion con la base de datos
     Conexion cnn = new Conexion ();
     Connection cn = cnn.conectar();
 
@@ -31,7 +35,8 @@ public class Puesto {
         this.idpuesto = idpuesto;
         this.puesto = puesto;
     }
-
+    
+    //Getter and Setter
     public int getIdpuesto() {
         return idpuesto;
     }
@@ -53,6 +58,7 @@ public class Puesto {
         return "Puesto{" + "idpuesto=" + idpuesto + ", puesto=" + puesto + '}';
     }
     
+    //Función para mostrar los datos en la interfaz
     public void mostrar(JTable TablePuesto){
         DefaultTableModel modelPuesto = new DefaultTableModel ();
         String []datos = new String [2]; 
@@ -79,6 +85,7 @@ public class Puesto {
         }
     }
     
+    //Función para guardar datos en la base de datos
     public void nuevoRegistro(JTextField txtpuesto){
         Puesto obpuesto = new Puesto ();
         obpuesto.setPuesto(txtpuesto.getText());
@@ -98,6 +105,7 @@ public class Puesto {
         }
     }
     
+    //Función para modificar datos existentes en la base de datos
     public void modificarRegistro(JTextField txtidpuesto, JTextField txtpuesto){
         Puesto puesto = new Puesto ();
         puesto.setIdpuesto(Integer.parseInt(txtidpuesto.getText()));
@@ -120,6 +128,7 @@ public class Puesto {
         }
     }
     
+    //Función para borrar datos en la base de datos
     public void borrarRegistro(JTable TablePuesto){
         DefaultTableModel modelPuesto = new DefaultTableModel ();
         int fila = TablePuesto.getSelectedRow();
@@ -132,8 +141,7 @@ public class Puesto {
                 JOptionPane.showMessageDialog(null,"Dato Eliminado");
                 modelPuesto.removeTableModelListener(TablePuesto);
                 modelPuesto.getDataVector().removeAllElements();
-                TablePuesto.updateUI();
-                
+                TablePuesto.updateUI(); 
             } catch (SQLException ex) { 
                 JOptionPane.showMessageDialog(null,"Error al eliminar los datos: "+ex.toString());
                 Logger.getLogger(PuestoView.class.getName()).log(Level.SEVERE, null, ex);
