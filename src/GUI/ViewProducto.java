@@ -29,6 +29,9 @@ Empleado mod;
      public ViewProducto(Empleado mod){
          initComponents();
          setLocationRelativeTo(null);
+        idproducto.setEditable(false);
+        op.mostrar(TableProducto);
+        op.cargarComboBox(Tboxidproveedor);
         this.mod = mod;
         mod.getPuesto();
         mod.getNombreEmpleado();
