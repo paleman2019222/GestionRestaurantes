@@ -32,7 +32,7 @@ public class Conexion {
             Class.forName(driver); // cargamos el driver MySQL
             
             cnn= (Connection)DriverManager.getConnection(url+bd, user, password);
-            System.out.println("Se conecto a Bd "+bd);
+      //      System.out.println("Se conecto a Bd "+bd);
         } catch (ClassNotFoundException ex) {
             System.out.println("No se conecto a Bd"+bd);
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
