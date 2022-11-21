@@ -276,7 +276,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnProductoviewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductoviewMouseClicked
         // TODO add your handling code here:
-          ViewProducto mn = new ViewProducto();
+          ViewProducto mn = new ViewProducto(mod);
         mn.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnProductoviewMouseClicked
