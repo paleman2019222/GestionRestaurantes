@@ -146,6 +146,7 @@ public class EmpleadoView extends javax.swing.JFrame {
         Menu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -467,7 +468,11 @@ public class EmpleadoView extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         String d = txtPassword.getText();
-        if(d.equals("")){
+        
+         if(txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtUser.getText().equals("") ||txtTelefono.getText().equals("")|| txtDireccion.getText().equals("") || txtSueldo.getText().equals("") || boxPuesto.getSelectedItem().equals("")){
+        JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
+        }else{
+               if(d.equals("")){
         JOptionPane.showMessageDialog(null, "El campo de contraseña está vacío, Ingrese su contraseña actual o escriba una contraseña nueva e intentelo de nuevo");
     
         }else{
@@ -495,6 +500,8 @@ public class EmpleadoView extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnGuardar.setEnabled(true); 
         }
+         }
+  
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

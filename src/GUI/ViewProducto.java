@@ -492,7 +492,7 @@ public class ViewProducto extends javax.swing.JFrame {
     private void MenúMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenúMouseClicked
     int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");   
     if(resp ==0){        
-        Menu mn = new Menu();
+        Menu mn = new Menu(mod);
         mn.setVisible(true);
         this.setVisible(false); 
        }   
