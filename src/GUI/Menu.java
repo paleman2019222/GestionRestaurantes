@@ -253,7 +253,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnEmpleadoViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoViewActionPerformed
         // TODO add your handling code here:
-         EmpleadoView mn = new EmpleadoView();
+         EmpleadoView mn = new EmpleadoView(mod);
         mn.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnEmpleadoViewActionPerformed

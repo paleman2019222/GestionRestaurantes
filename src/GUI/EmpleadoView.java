@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
 public class EmpleadoView extends javax.swing.JFrame {
         Conexion connect = new Conexion();
         Empleado emp = new Empleado();
-        
+        Empleado mod;
             public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -93,6 +93,20 @@ public class EmpleadoView extends javax.swing.JFrame {
         btnEliminar.setEnabled(false);
         btnEditar.setEnabled(false);
     }
+    
+         public EmpleadoView(Empleado mod){
+         initComponents();
+         setLocationRelativeTo(null);
+         txtId.setEditable(false);
+        emp.mostrar(TblEmpleado);
+        emp.cargarComboBox(boxPuesto);
+        btnEliminar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        this.mod = mod;
+        mod.getPuesto();
+        mod.getNombreEmpleado();
+         System.out.println(mod.getNombreEmpleado());
+        }
 
   
     @SuppressWarnings("unchecked")
@@ -134,7 +148,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         txtSueldo = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jSeparator17 = new javax.swing.JSeparator();
         jSeparator18 = new javax.swing.JSeparator();
         jLabel24 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
@@ -156,7 +169,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Empleado");
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -166,7 +178,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/trabajo-en-equipo (1).png"))); // NOI18N
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, 110));
 
-        TblEmpleado.setBackground(new java.awt.Color(255, 255, 255));
         TblEmpleado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -189,7 +200,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 190, 20));
 
-        txtUser1.setBackground(new java.awt.Color(255, 255, 255));
         txtUser1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtUser1.setForeground(new java.awt.Color(51, 51, 51));
         txtUser1.setToolTipText("User");
@@ -237,7 +247,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jSeparator10.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator10.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 190, 20));
+        jPanel4.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 210, 20));
 
         txtNombre.setBackground(new java.awt.Color(0, 0, 0));
         txtNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -248,7 +258,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jSeparator11.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator11.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 190, 20));
+        jPanel4.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 210, 20));
 
         jLabel17.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -265,7 +275,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jSeparator12.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator12.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 190, 20));
+        jPanel4.add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 210, 20));
 
         jLabel18.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -282,7 +292,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jSeparator13.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator13.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 190, 20));
+        jPanel4.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 210, 20));
 
         jLabel19.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
@@ -299,7 +309,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jSeparator14.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator14.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 190, 20));
+        jPanel4.add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 210, 20));
 
         jLabel20.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
@@ -316,7 +326,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jSeparator15.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator15.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 450, 190, 10));
+        jPanel4.add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, 210, 10));
 
         jLabel21.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
@@ -326,7 +336,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jSeparator16.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator16.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator16, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 510, 190, 10));
+        jPanel4.add(jSeparator16, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 510, 210, 10));
 
         txtSueldo.setBackground(new java.awt.Color(0, 0, 0));
         txtSueldo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -347,13 +357,9 @@ public class EmpleadoView extends javax.swing.JFrame {
         jLabel23.setText("Puesto");
         jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 350, 20));
 
-        jSeparator17.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator17.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator17, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 570, 190, 10));
-
         jSeparator18.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator18.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jSeparator18, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 630, 190, 10));
+        jPanel4.add(jSeparator18, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 630, 210, 10));
 
         jLabel24.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
@@ -361,8 +367,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         jLabel24.setText("Contraseña");
         jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 350, 20));
 
-        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -371,8 +375,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         });
         jPanel4.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 670, 90, 30));
 
-        btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
         btnGuardar.setText("Guardar");
         btnGuardar.setBorder(null);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -382,8 +384,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         });
         jPanel4.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 670, 90, 30));
 
-        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
-        btnEditar.setForeground(new java.awt.Color(0, 0, 0));
         btnEditar.setText("Actualizar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,7 +399,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         boxPuesto.setBackground(new java.awt.Color(0, 0, 0));
         boxPuesto.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(boxPuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 550, 190, -1));
+        jPanel4.add(boxPuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 550, 210, -1));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 730));
 
@@ -532,7 +532,7 @@ public class EmpleadoView extends javax.swing.JFrame {
         
             int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
          if(resp ==0){
-              Menu mn = new Menu();
+              Menu mn = new Menu(mod);
           mn.setVisible(true);
           this.setVisible(false); 
          }   
@@ -584,7 +584,6 @@ public class EmpleadoView extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator16;
-    private javax.swing.JSeparator jSeparator17;
     private javax.swing.JSeparator jSeparator18;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator9;
