@@ -437,14 +437,18 @@ public class EmpleadoView extends javax.swing.JFrame {
         }else{
             String x = txtTelefono.getText();
             String y = txtSueldo.getText();
+            
             if(isNumeric(x)==false){
              JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener únicamente números, intentelo de nuevo por favor.");
             }else if(isDouble(y)==false){
              JOptionPane.showMessageDialog(null, "El campo de sueldo debe contener únicamente números, intentelo de nuevo por favor.");
-            }else{
+            }else if(txtTelefono.getSize().equals(8)){
                                     emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
         emp.mostrar(TblEmpleado);
         limpiar();    
+            }else{
+             JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener 8 dígitos");
+
             }
  
         }
