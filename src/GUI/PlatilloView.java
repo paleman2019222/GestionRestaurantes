@@ -12,7 +12,15 @@ public class PlatilloView extends javax.swing.JFrame {
     Platillo op = new Platillo();
     Empleado mod;
     
-    public PlatilloView(Empleado mod) {
+    public PlatilloView() {
+        initComponents();
+        txtIdPlatillo.setEditable(false);
+        op.mostrar(TablePlatillo);
+        Eliminar.setEnabled(false);
+        Editar.setEnabled(false);
+    }
+
+    PlatilloView(Empleado mod) {
         initComponents();
         txtIdPlatillo.setEditable(false);
         op.mostrar(TablePlatillo);
@@ -21,18 +29,30 @@ public class PlatilloView extends javax.swing.JFrame {
         this.mod = mod;
         mod.getPuesto();
         mod.getNombreEmpleado();
-        System.out.println(mod.getNombreEmpleado());
-    }
-
-
-    PlatilloView() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println(mod.getNombreEmpleado());    
     }
     
     void limpiar(){
         txtIdPlatillo.setText(null);
         txtNombrePlatillo.setText(null);
         txtPrecioPlatillo.setText(null);
+    }
+    
+    public void llenarDatos(){
+        Object ob [] = new Object[2];
+        ob[0]=txtNombrePlatillo.getText();
+        ob[0]=txtPrecioPlatillo.getText();
+    }
+
+    public void validarRegistros (){
+        DefaultTableModel modelPuesto = new DefaultTableModel ();
+        for (int i=0; i<TablePlatillo.getRowCount(); i++){
+            if (TablePlatillo.getValueAt(i, 2).equals(txtNombrePlatillo.getText())){
+                JOptionPane.showMessageDialog(null, "El puesto ya está registrado");
+                modelPuesto.removeRow(i);
+            }
+        }
+        llenarDatos();
     }
       
     private boolean isDouble(String cadena) {
@@ -225,6 +245,7 @@ public class PlatilloView extends javax.swing.JFrame {
             if(isDouble(x)==false){
                 JOptionPane.showMessageDialog(null, "El campo de precio debe contener únicamente números, intentelo de nuevo por favor.");
             }else{
+                validarRegistros();
                 op.nuevoRegistro(txtNombrePlatillo, txtPrecioPlatillo);
                 op.mostrar(TablePlatillo);
                 limpiar();   
@@ -242,6 +263,7 @@ public class PlatilloView extends javax.swing.JFrame {
             }else{
                 int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
                 if(resp ==0){
+                    validarRegistros();
                     op.modificarRegistro(txtIdPlatillo, txtNombrePlatillo, txtPrecioPlatillo);
                     op.mostrar(TablePlatillo);
                     limpiar();
