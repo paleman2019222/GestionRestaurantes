@@ -42,18 +42,17 @@ public class Menu extends javax.swing.JFrame {
             btnProductoview.setEnabled(false);
             btnPlatilloView.setEnabled(true);
             btnPuestoView.setEnabled(false);
-            
-        }else if(mod.getPuesto().equals("Conserje")){
-            btnEmpleadoView.setEnabled(false);
-            btnProveedorView.setEnabled(false);
-            btnProductoview.setEnabled(false);
-            btnPlatilloView.setEnabled(false);
-            btnPuestoView.setEnabled(false);  
         }else if(mod.getPuesto().equals("Cocinero")){
             btnEmpleadoView.setEnabled(false);
             btnProveedorView.setEnabled(false);
             btnProductoview.setEnabled(true);
             btnPlatilloView.setEnabled(true);
+            btnPuestoView.setEnabled(false); 
+        }else{
+            btnEmpleadoView.setEnabled(false);
+            btnProveedorView.setEnabled(false);
+            btnProductoview.setEnabled(false);
+            btnPlatilloView.setEnabled(false);
             btnPuestoView.setEnabled(false); 
         }
         
@@ -254,7 +253,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnEmpleadoViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoViewActionPerformed
         // TODO add your handling code here:
-         EmpleadoView mn = new EmpleadoView();
+         EmpleadoView mn = new EmpleadoView(mod);
         mn.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnEmpleadoViewActionPerformed

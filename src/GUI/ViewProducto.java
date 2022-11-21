@@ -199,7 +199,7 @@ public class ViewProducto extends javax.swing.JFrame {
         Tboxidproveedor.setForeground(new java.awt.Color(255, 255, 255));
         Tboxidproveedor.setBorder(null);
 
-        btnEditar.setText("Editar");
+        btnEditar.setText("Actualizar");
         btnEditar.setBorder(null);
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -428,11 +428,11 @@ public class ViewProducto extends javax.swing.JFrame {
          String x = costoproduct.getText();
          String y = cantidadproduct.getText();
          
-         if(isNumeric(x)==false){
+         if(isDouble(x)==false){
              JOptionPane.showMessageDialog(null, "El campo Precio del producto debe contener únicamente números, intentelo de nuevo por favor.");
          
-         }else if(isDouble(y)==false){
-                JOptionPane.showMessageDialog(null, "El campo cantidad el producto debe contener únicamente números, intentelo de nuevo por favor.");
+         }else if(isNumeric(y)==false){
+                JOptionPane.showMessageDialog(null, "El campo cantidad el producto debe contener únicamente números enteros, intentelo de nuevo por favor.");
             } else{
                 int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
                 if(resp ==0){
@@ -464,10 +464,10 @@ public class ViewProducto extends javax.swing.JFrame {
          String x = costoproduct.getText();
          String y = cantidadproduct.getText();
          
-         if(isNumeric(x)==false){
+         if(isDouble(x)==false){
              JOptionPane.showMessageDialog(null, "El campo precio del producto debe contener únicamente números, intentelo de nuevo por favor.");
-         }else if(isDouble(y)==false){
-             JOptionPane.showMessageDialog(null, "El campo cantidad el producto debe contener únicamente números, intentelo de nuevo por favor.");
+         }else if(isNumeric(y)==false){
+             JOptionPane.showMessageDialog(null, "El campo cantidad el producto debe contener únicamente números enteros, intentelo de nuevo por favor.");
          }else{
              op.GuardarRegistro(nombreproduct, costoproduct, cantidadproduct, Tboxidproveedor);
              op.mostrar(TableProducto);
@@ -498,6 +498,8 @@ public class ViewProducto extends javax.swing.JFrame {
        }   
     }//GEN-LAST:event_MenúMouseClicked
 
+
+    
     private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked
      int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea Salir?");
      if(resp ==0){
