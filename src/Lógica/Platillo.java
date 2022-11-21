@@ -1,5 +1,6 @@
 package Lógica;
 
+//Librerias a utilizar
 import Persistencia.Conexion;
 import GUI.PlatilloView;
 import java.sql.Connection;
@@ -19,9 +20,12 @@ import javax.swing.table.DefaultTableModel;
  * @author 50236
  */
 public class Platillo {
+    //Variables 
     private int idplatillo;
     private String nombrePlatillo;
     private double precioPlatillo;
+    
+    //Conexion con la base de datos
     Conexion cnn = new Conexion ();
     Connection cn = cnn.conectar();
     
@@ -33,7 +37,8 @@ public class Platillo {
         this.nombrePlatillo = nombrePlatillo;
         this.precioPlatillo = precioPlatillo;
     }
-
+    
+    //Getter and Setter
     public int getIdplatillo() {
         return idplatillo;
     }
@@ -62,11 +67,11 @@ public class Platillo {
     public String toString() {
         return "Platillo{" + "idplatillo=" + idplatillo + ", nombrePlatillo=" + nombrePlatillo + ", precioPlatillo=" + precioPlatillo + ", cnn=" + cnn + ", cn=" + cn + '}';
     }
-
+    
+    //Función para mostrar los datos en la interfaz
     public void mostrar(JTable TablePlatillo){
         DefaultTableModel modelPlatillo = new DefaultTableModel ();
         String []datos = new String [3]; 
-        
         
         String sql = "select * from platillo";
         Statement st;
@@ -92,6 +97,7 @@ public class Platillo {
         }
     }
     
+    //Función para guardar datos en la base de datos
     public void nuevoRegistro(JTextField txtNombrePlatillo, JTextField txtPrecioPlatillo){
         Platillo plat = new Platillo ();
         plat.setNombrePlatillo(txtNombrePlatillo.getText());
@@ -113,6 +119,7 @@ public class Platillo {
         }
     }
     
+    //Función para modificar datos existentes en la base de datos
     public void modificarRegistro(JTextField txtidplatillo, JTextField txtnombrePlatillo, JTextField precioPlatillo){
         Platillo plat = new Platillo ();
         plat.setIdplatillo(Integer.parseInt(txtidplatillo.getText()));
@@ -137,6 +144,7 @@ public class Platillo {
         }
     }
     
+    //Función para borrar datos en la base de datos
     public void borrarRegistro(JTable TablePlatillo){
         DefaultTableModel modelPlatillo = new DefaultTableModel ();
         int fila = TablePlatillo.getSelectedRow();
@@ -150,7 +158,6 @@ public class Platillo {
                 modelPlatillo.removeTableModelListener(TablePlatillo);
                 modelPlatillo.getDataVector().removeAllElements();
                 TablePlatillo.updateUI();
-                
             } catch (SQLException ex) { 
                 Logger.getLogger(PlatilloView.class.getName()).log(Level.SEVERE, null, ex);
             }

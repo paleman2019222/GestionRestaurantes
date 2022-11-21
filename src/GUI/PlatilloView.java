@@ -1,5 +1,6 @@
 package GUI;
 import Lógica.Platillo;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,6 +20,17 @@ public class PlatilloView extends javax.swing.JFrame {
         txtIdPlatillo.setText(null);
         txtNombrePlatillo.setText(null);
         txtPrecioPlatillo.setText(null);
+    }
+      
+    private boolean isDouble(String cadena) {
+        boolean resultado;
+        try{
+            Double.parseDouble(cadena);
+            resultado=true;
+        }catch(NumberFormatException e){
+            resultado=false;
+        }
+        return resultado;
     }
 
     /**
@@ -68,25 +80,25 @@ public class PlatilloView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Ingreso de Datos");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 38, 390, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 38, 350, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("ID");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 390, 30));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 350, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Nombre");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 390, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 350, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Precio");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 390, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 350, -1));
 
         Guardar.setText("Guardar");
         Guardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -95,7 +107,7 @@ public class PlatilloView extends javax.swing.JFrame {
                 GuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 90, 30));
+        jPanel2.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 90, 30));
 
         Editar.setText("Editar");
         Editar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -104,7 +116,7 @@ public class PlatilloView extends javax.swing.JFrame {
                 EditarActionPerformed(evt);
             }
         });
-        jPanel2.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, 90, 30));
+        jPanel2.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 480, 90, 30));
 
         Eliminar.setText("Eliminar");
         Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -113,30 +125,31 @@ public class PlatilloView extends javax.swing.JFrame {
                 EliminarActionPerformed(evt);
             }
         });
-        jPanel2.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 480, 90, 30));
+        jPanel2.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, 90, 30));
 
+        txtIdPlatillo.setEditable(false);
         txtIdPlatillo.setBackground(new java.awt.Color(0, 0, 0));
         txtIdPlatillo.setForeground(new java.awt.Color(255, 255, 255));
         txtIdPlatillo.setBorder(null);
         txtIdPlatillo.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtIdPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 160, 170, 20));
+        jPanel2.add(txtIdPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 170, 20));
 
         txtNombrePlatillo.setBackground(new java.awt.Color(0, 0, 0));
         txtNombrePlatillo.setForeground(new java.awt.Color(255, 255, 255));
         txtNombrePlatillo.setBorder(null);
         txtNombrePlatillo.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtNombrePlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 270, 170, 20));
+        jPanel2.add(txtNombrePlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 170, 20));
 
         txtPrecioPlatillo.setBackground(new java.awt.Color(0, 0, 0));
         txtPrecioPlatillo.setForeground(new java.awt.Color(255, 255, 255));
         txtPrecioPlatillo.setBorder(null);
         txtPrecioPlatillo.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtPrecioPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 390, 170, 20));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 180, 20));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 180, 20));
-        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, 180, 20));
+        jPanel2.add(txtPrecioPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 170, 20));
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 180, 20));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 180, 20));
+        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, 180, 20));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 550));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 550));
 
         TablePlatillo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -156,15 +169,15 @@ public class PlatilloView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TablePlatillo);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 127, 410, 410));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 127, 450, 370));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Platillos");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, 310, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 430, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Platillo.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, 110, 90));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 110, 90));
 
         Menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hogar (30px).png"))); // NOI18N
         Menu.setText("Menú");
@@ -174,7 +187,7 @@ public class PlatilloView extends javax.swing.JFrame {
                 MenuMouseClicked(evt);
             }
         });
-        jPanel1.add(Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
+        jPanel1.add(Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, -1, -1));
 
         Salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar-sesion (27px).png"))); // NOI18N
         Salir.setText("Salir");
@@ -184,29 +197,53 @@ public class PlatilloView extends javax.swing.JFrame {
                 SalirMouseClicked(evt);
             }
         });
-        jPanel1.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, -1, -1));
+        jPanel1.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 510, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 560));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        op.nuevoRegistro(txtNombrePlatillo, txtPrecioPlatillo);
-        op.mostrar(TablePlatillo);
-        limpiar();
+        if(txtNombrePlatillo.getText().equals("") || txtPrecioPlatillo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
+        }else{
+            String x = txtPrecioPlatillo.getText();
+            if(isDouble(x)==false){
+                JOptionPane.showMessageDialog(null, "El campo de precio debe contener únicamente números, intentelo de nuevo por favor.");
+            }else{
+                op.nuevoRegistro(txtNombrePlatillo, txtPrecioPlatillo);
+                op.mostrar(TablePlatillo);
+                limpiar();   
+            }
+        }
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        op.modificarRegistro(txtIdPlatillo, txtNombrePlatillo, txtPrecioPlatillo);
-        op.mostrar(TablePlatillo);
-        limpiar();
+        if(txtNombrePlatillo.getText().equals("") || txtPrecioPlatillo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
+        } else{
+            String x = txtPrecioPlatillo.getText();
+            if(isDouble(x)==false){
+                JOptionPane.showMessageDialog(null, "El campo de precio debe contener únicamente números, intentelo de nuevo por favor.");
+            }else{
+                int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
+                if(resp ==0){
+                    op.modificarRegistro(txtIdPlatillo, txtNombrePlatillo, txtPrecioPlatillo);
+                    op.mostrar(TablePlatillo);
+                    limpiar();
+                }
+            }
+        }
     }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-       op.borrarRegistro(TablePlatillo);
-       op.mostrar(TablePlatillo);
-       limpiar();
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro seleccionado?");
+        if(resp ==0){
+            op.borrarRegistro(TablePlatillo);
+            op.mostrar(TablePlatillo);
+            limpiar();
+        } 
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void TablePlatilloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablePlatilloMouseClicked
@@ -217,13 +254,19 @@ public class PlatilloView extends javax.swing.JFrame {
     }//GEN-LAST:event_TablePlatilloMouseClicked
 
     private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked
-        System.exit(0);
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea Salir?");
+        if(resp ==0){
+           System.exit(0);
+        }  
     }//GEN-LAST:event_SalirMouseClicked
 
     private void MenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseClicked
-        Menu mn = new Menu();
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
+        if(resp ==0){
+            Menu mn = new Menu();
             mn.setVisible(true);
-            this.setVisible(false);
+            this.setVisible(false); 
+        }  
     }//GEN-LAST:event_MenuMouseClicked
 
     /**

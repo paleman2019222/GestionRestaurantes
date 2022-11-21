@@ -1,5 +1,6 @@
 package Lógica;
 
+//Librerias a utilizar
 import Persistencia.Conexion;
 import GUI.ProveedorView;
 import java.sql.Connection;
@@ -19,14 +20,18 @@ import javax.swing.table.DefaultTableModel;
  * @author 50236
  */
 public class Proveedor {
+    //Variables
     private int idproveedor;
     private String nombreProveedor;
+    
+    //Conexión con la base de datos
     Conexion cnn = new Conexion ();
     Connection cn = cnn.conectar();
 
     public Proveedor() {
     }
-
+    
+    //Getter and Setter
     public Proveedor(int idproveedor, String nombreProveedor) {
         this.idproveedor = idproveedor;
         this.nombreProveedor = nombreProveedor;
@@ -53,6 +58,7 @@ public class Proveedor {
         return "Proveedor{" + "idproveedor=" + idproveedor + ", nombreProveedor=" + nombreProveedor + '}';
     }
     
+    //Función para mostrar los datos en la interfaz
     public void mostrar(JTable TableProveedor){
         DefaultTableModel modelProveedor = new DefaultTableModel ();
         String []datos = new String [2]; 
@@ -80,6 +86,7 @@ public class Proveedor {
         }
     }
     
+    //Función para guardar datos en la base de datos
     public void nuevoRegistro(JTextField txtnombreproveedor){
         Proveedor prov = new Proveedor ();
         prov.setNombreProveedor(txtnombreproveedor.getText());
@@ -99,6 +106,7 @@ public class Proveedor {
         }
     }
     
+    //Función para modificar datos existentes en la base de datos
     public void modificarRegistro(JTextField txtidproveedor, JTextField txtnombreproveedor){
         Proveedor prov = new Proveedor ();
         prov.setIdproveedor(Integer.parseInt(txtidproveedor.getText()));
@@ -121,6 +129,7 @@ public class Proveedor {
         }
     }
     
+    //Función para borrar datos en la base de datos
     public void borrarRegistro(JTable TableProveedor){
         DefaultTableModel modelProveedor = new DefaultTableModel ();
         int fila = TableProveedor.getSelectedRow();
