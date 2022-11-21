@@ -1,5 +1,6 @@
 package GUI;
 import Lógica.Proveedor;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -67,32 +68,33 @@ public class ProveedorView extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ID");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 200, 390, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 200, 350, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Nombre");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 390, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 350, -1));
 
+        txtidproveedor.setEditable(false);
         txtidproveedor.setBackground(new java.awt.Color(0, 0, 0));
         txtidproveedor.setForeground(new java.awt.Color(255, 255, 255));
         txtidproveedor.setBorder(null);
         txtidproveedor.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtidproveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 160, 20));
+        jPanel2.add(txtidproveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 150, 20));
 
         txtnombreproveedor.setBackground(new java.awt.Color(0, 0, 0));
         txtnombreproveedor.setForeground(new java.awt.Color(255, 255, 255));
         txtnombreproveedor.setBorder(null);
         txtnombreproveedor.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtnombreproveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 160, -1));
+        jPanel2.add(txtnombreproveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 150, 20));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 160, 10));
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 160, 10));
 
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 160, 20));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 380, 160, 20));
 
         Guardar.setText("Guardar");
         Guardar.setBorder(null);
@@ -102,7 +104,7 @@ public class ProveedorView extends javax.swing.JFrame {
                 GuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, 90, 30));
+        jPanel2.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 90, 30));
 
         Editar.setText("Editar");
         Editar.setBorder(null);
@@ -112,7 +114,7 @@ public class ProveedorView extends javax.swing.JFrame {
                 EditarActionPerformed(evt);
             }
         });
-        jPanel2.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 90, 30));
+        jPanel2.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, 90, 30));
 
         Eliminar.setText("Eliminar");
         Eliminar.setBorder(null);
@@ -122,15 +124,15 @@ public class ProveedorView extends javax.swing.JFrame {
                 EliminarActionPerformed(evt);
             }
         });
-        jPanel2.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 460, 90, 30));
+        jPanel2.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, 90, 30));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Ingreso de Datos");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 390, 80));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 350, 80));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 550));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 550));
 
         TableProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,15 +152,15 @@ public class ProveedorView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TableProveedor);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 410, 400));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(368, 130, -1, 370));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Mensajero.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 100, 100));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Proveedor.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 100, 100));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Proveedor");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 330, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 330, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hogar (30px).png"))); // NOI18N
         jLabel6.setText("Menú");
@@ -168,7 +170,7 @@ public class ProveedorView extends javax.swing.JFrame {
                 jLabel6MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(755, 10, 80, 30));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 90, 80, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar-sesion (27px).png"))); // NOI18N
         jLabel7.setText(" Salir");
@@ -178,7 +180,7 @@ public class ProveedorView extends javax.swing.JFrame {
                 jLabel7MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, 70, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 510, 70, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
@@ -186,21 +188,35 @@ public class ProveedorView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        op.nuevoRegistro(txtnombreproveedor);
+        if(txtnombreproveedor.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "El campo está vacio, verifique su información e inténtelo de nuevo");
+        }else{
+            op.nuevoRegistro(txtnombreproveedor);
         op.mostrar(TableProveedor);
-        limpiar();
+        limpiar();   
+        }
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        op.modificarRegistro(txtidproveedor, txtnombreproveedor);
-        op.mostrar(TableProveedor);
-        limpiar();
+        if(txtnombreproveedor.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "El campo está vacio, verifique su información e inténtelo de nuevo");
+        } else{
+            int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
+            if(resp ==0){
+                op.modificarRegistro(txtidproveedor, txtnombreproveedor);
+                op.mostrar(TableProveedor);
+                limpiar();
+                }
+            }
     }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        op.borrarRegistro(TableProveedor);
-        op.mostrar(TableProveedor);
-        limpiar();
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro seleccionado?");
+        if(resp ==0){
+            op.borrarRegistro(TableProveedor);
+            op.mostrar(TableProveedor);
+            limpiar();
+        } 
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void TableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProveedorMouseClicked
@@ -210,13 +226,19 @@ public class ProveedorView extends javax.swing.JFrame {
     }//GEN-LAST:event_TableProveedorMouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        Menu mn = new Menu();
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
+        if(resp ==0){
+            Menu mn = new Menu();
             mn.setVisible(true);
-            this.setVisible(false);
+            this.setVisible(false); 
+       }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        System.exit(0);
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea Salir?");
+        if(resp ==0){
+           System.exit(0);
+        }
     }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
