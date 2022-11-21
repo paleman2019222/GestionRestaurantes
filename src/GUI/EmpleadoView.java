@@ -59,12 +59,39 @@ public class EmpleadoView extends javax.swing.JFrame {
   DefaultTableModel model = new DefaultTableModel (); // se crea un objeto de tipo defaulmodel
   String []datos = new String[8];
         
+      private boolean isNumeric(String cadena) {
+        boolean resultado;
+        try{
+        Integer.parseInt(cadena);
+                resultado=true;
+        }catch(NumberFormatException e){
+        resultado=false;
+        }
+        return resultado;
+    }
+      
+         private boolean isDouble(String cadena) {
+        boolean resultado;
+        try{
+        Double.parseDouble(cadena);
+                resultado=true;
+        }catch(NumberFormatException e){
+        resultado=false;
+        }
+        return resultado;
+    }
+  
+  
+  
   Connection cc; 
     public EmpleadoView() {
+       
         initComponents();
           txtId.setEditable(false);
      emp.mostrar(TblEmpleado);
        emp.cargarComboBox(boxPuesto);
+        btnEliminar.setEnabled(false);
+        btnEditar.setEnabled(false);
     }
 
   
@@ -356,7 +383,7 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         btnEditar.setBackground(new java.awt.Color(255, 255, 255));
         btnEditar.setForeground(new java.awt.Color(0, 0, 0));
-        btnEditar.setText("Editar");
+        btnEditar.setText("Actualizar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -404,8 +431,23 @@ public class EmpleadoView extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-    emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
+        if(txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtUser.getText().equals("") ||txtTelefono.getText().equals("")|| txtDireccion.getText().equals("") || txtSueldo.getText().equals("") || boxPuesto.getSelectedItem().equals("") || txtPassword.getPassword().equals("")){
+        JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
+        }else{
+            String x = txtTelefono.getText();
+            String y = txtSueldo.getText();
+            if(isNumeric(x)==false){
+             JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener únicamente números, intentelo de nuevo por favor.");
+            }else if(isDouble(y)==false){
+             JOptionPane.showMessageDialog(null, "El campo de sueldo debe contener únicamente números, intentelo de nuevo por favor.");
+            }else{
+                                    emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
         emp.mostrar(TblEmpleado);
+        limpiar();    
+            }
+ 
+        }
+ 
     }//GEN-LAST:event_btnGuardarActionPerformed
     
     private void TblEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblEmpleadoMouseClicked
@@ -418,18 +460,54 @@ public class EmpleadoView extends javax.swing.JFrame {
      txtDireccion.setText(TblEmpleado.getValueAt(fila, 5).toString());
      txtSueldo.setText(TblEmpleado.getValueAt(fila, 6).toString());
      boxPuesto.setSelectedItem(TblEmpleado.getValueAt(fila, 7).toString());
-     
-   
+     btnGuardar.setEnabled(false);
+      btnEliminar.setEnabled(true);
+        btnEditar.setEnabled(true);
     }//GEN-LAST:event_TblEmpleadoMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
+        String d = txtPassword.getText();
+        if(d.equals("")){
+        JOptionPane.showMessageDialog(null, "El campo de contraseña está vacío, Ingrese su contraseña actual o escriba una contraseña nueva e intentelo de nuevo");
+    
+        }else{
+            
+             String x = txtTelefono.getText();
+            String y = txtSueldo.getText();
+            if(isNumeric(x)==false){
+             JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener únicamente números, intentelo de nuevo por favor.");
+            }else if(isDouble(y)==false){
+             JOptionPane.showMessageDialog(null, "El campo de sueldo debe contener únicamente números, intentelo de nuevo por favor.");
+            }else{
+            
+                               int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
+       if(resp ==0){
+  
+               emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
         emp.mostrar(TblEmpleado);
+           limpiar();
+       }
+            }
+            
+
+     
+           btnEliminar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnGuardar.setEnabled(true); 
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        emp.eliminar(TblEmpleado);
+         int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro seleccionado?");
+       if(resp ==0){
+          emp.eliminar(TblEmpleado);
         emp.mostrar(TblEmpleado);
+        limpiar();
+       }   
+        
+        btnEliminar.setEnabled(false);
+        btnEditar.setEnabled(false);
+         btnGuardar.setEnabled(true);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked
@@ -451,6 +529,17 @@ public class EmpleadoView extends javax.swing.JFrame {
       
     }//GEN-LAST:event_MenuMouseClicked
     
+    public  void limpiar(){
+        boxPuesto.setSelectedItem(null);
+        txtId.setText(null);
+        txtNombre.setText(null);
+        txtApellido.setText(null);
+        txtTelefono.setText(null);
+        txtUser.setText(null);
+        txtDireccion.setText(null);
+        txtPassword.setText(null);
+        txtSueldo.setText(null);   
+    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Menu;

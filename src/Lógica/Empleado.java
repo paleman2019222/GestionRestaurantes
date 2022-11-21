@@ -32,7 +32,7 @@ public class Empleado {
     private double sueldoEmpleado;
     private String idPuesto;
     private String password;
-    
+    private String puesto;
     Conexion cnn = new Conexion ();
     Connection cn = cnn.conectar();
     public Empleado() {
@@ -121,6 +121,16 @@ public class Empleado {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
+    }
+    
+    
 
       public void mostrar(JTable TableEmpleado){
         DefaultTableModel modelEmpleado = new DefaultTableModel ();

@@ -4,10 +4,12 @@
  */
 package GUI;
 
+import Lógica.Empleado;
 import Persistencia.Conexion;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
-    
+    String user;
     
     Conexion connect = new Conexion();
     
@@ -190,18 +192,21 @@ public class Login extends javax.swing.JFrame {
        //connect.conectar(); 
        con = connect.conectar();
          
-         String user = txtUser.getText();
+          user = txtUser.getText();
          String password = String.valueOf(txtPassword.getPassword ());
-         String Consulta = "SELECT * FROM empleado WHERE usuarioEmpleado = '"+user+"'and  passwordEmpleado = '"+password+ "'";
+         String Consulta = "SELECT empleado.nombreEmpleado, empleado.apellidoEmpleado, empleado.direccionEmpleado, empleado.direccionEmpleado, empleado.teléfonoEmpleado, puesto.puesto FROM empleado, puesto WHERE usuarioEmpleado = '"+user+"'and  passwordEmpleado = '"+password+ "' and empleado.idPuesto = puesto.idpuesto";
          
           try{
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(Consulta);
         if(rs.next()){
-            JOptionPane.showMessageDialog(null, "Si existe el usuario: " + txtUser.getText());
-            
-          Menu mn = new Menu();
-            
+            JOptionPane.showMessageDialog(null, "Bienvenido(a): " + txtUser.getText());
+            Empleado e = new Empleado();
+            e.setPuesto(rs.getString(6));
+            e.setNombreEmpleado(rs.getString(1));
+           // obtenerDatos();
+          Menu mn = new Menu(e);
+            System.out.println(e.getPuesto());
           mn.setVisible(true);
           this.setVisible(false);
         }else{
@@ -215,6 +220,39 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
+    
+    public boolean  obtenerDatos(){
+          String Consulta = "SELECT * FROM empleado WHERE usuarioEmpleado = '"+user+"' AND idpuesto = 3";
+         boolean bandera = false;
+          try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(Consulta);
+        if(rs.next()){
+            ArrayList<Empleado> listempleado= new ArrayList<Empleado>();
+            listempleado.add(new Empleado(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getDouble(7), String.valueOf(rs.getInt(8)), rs.getString(9)));
+     
+         for (int i=0; i<listempleado.size(); i++){
+        System.out.println("persona " + listempleado.get(i).getNombreEmpleado());
+             if(listempleado.get(i).getIdPuesto() == "3"){
+             bandera = true;
+         }
+    }
+         
+    
+         
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+            
+            
+        }
+        
+        }catch(Exception e){
+            System.out.println(e);
+        }
+          
+          return bandera;
+    }
+            
     /**
      * @param args the command line arguments
      */
