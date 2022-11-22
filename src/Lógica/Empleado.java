@@ -15,15 +15,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author PABLO ALEMAN
- */
 public class Empleado {
-
-    //comentario pablo
-    
-    private int idEmpleado;
+   private int idEmpleado;
     private String nombreEmpleado;
     private String apellidoEmpleado;
     private String usuarioEmpleado;
@@ -132,10 +125,9 @@ public class Empleado {
     
     
 
-      public void mostrar(JTable TableEmpleado){
+    public void mostrar(JTable TableEmpleado){
         DefaultTableModel modelEmpleado = new DefaultTableModel ();
         String []datos = new String [8]; 
-        
         String sql = "Select empleado.idempleado, empleado.nombreempleado, empleado.apellidoEmpleado, empleado.usuarioEmpleado, empleado.teléfonoEmpleado, empleado.direccionEmpleado, empleado.sueldoEmpleado , puesto.puesto from empleado, puesto where empleado.idPuesto = puesto.idpuesto;";
         Statement st;
         modelEmpleado.addColumn("Id");
@@ -145,13 +137,10 @@ public class Empleado {
         modelEmpleado.addColumn("Teléfono");
         modelEmpleado.addColumn("Dirección");
         modelEmpleado.addColumn("Sueldo");
-        modelEmpleado.addColumn("Puesto");
-    
-        
+        modelEmpleado.addColumn("Puesto");   
         try{
             st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
+            ResultSet rs = st.executeQuery(sql);           
             while (rs.next()){
                 datos[0]=rs.getString(1);
                 datos[1]=rs.getString(2);
@@ -160,33 +149,31 @@ public class Empleado {
                 datos[4]=rs.getString(5);
                 datos[5]=rs.getString(6);
                 datos[6]=rs.getString(7);
-                datos[7]=rs.getString(8);
-                
+                datos[7]=rs.getString(8);               
                 modelEmpleado.addRow(datos);
-            }
-            
+            }            
             TableEmpleado.setModel(modelEmpleado);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Error al mostrar los datos: "+e.toString());
         }
     }
     
-       public void cargarComboBox(JComboBox puesto){
+    public void cargarComboBox(JComboBox puesto){
         try{
-             Connection cn = cnn.conectar();
-        PreparedStatement  consulta = cn.prepareStatement("SELECT puesto from puesto");
-      ResultSet rs = consulta.executeQuery();
-      
-        while(rs.next()){
+            Connection cn = cnn.conectar();
+            PreparedStatement  consulta = cn.prepareStatement("SELECT puesto from puesto");
+            ResultSet rs = consulta.executeQuery();      
+            while(rs.next()){
             puesto.addItem(rs.getString("puesto"));
-        }
+            }
         }catch(SQLException e){
             System.out.println(e);
-        }
-    
+        }  
     }
+    
+    //Método para guardar empleado
     public void guardarEmpleado(JTextField txtNombre, JTextField txtApellido, JTextField txtUsuario, JTextField txtTelefono, JTextField txtDireccion, JTextField txtSueldo, JComboBox txtPuesto, JPasswordField txtPassword){
-               cn = cnn.conectar();
+        cn = cnn.conectar();
         Empleado empleado = new Empleado();
         empleado.setNombreEmpleado(txtNombre.getText());
         empleado.setApellidoEmpleado(txtApellido.getText());
@@ -195,52 +182,40 @@ public class Empleado {
         empleado.setDireccionEmpleado(txtDireccion.getText());
         empleado.setSueldoEmpleado(Double.parseDouble(txtSueldo.getText()));
         empleado.setPassword(String.valueOf(txtPassword.getPassword()));
-        
-        
-        
-                  int g= 0;
-                    try {
-
-                    PreparedStatement  consulta = cn.prepareStatement("select idpuesto from puesto where puesto='"+txtPuesto.getSelectedItem()+"'");
-        ResultSet p = consulta.executeQuery();
-                    
-                    while(p.next()){
-                        g=p.getInt(1);
-                    }
-                   
-                } catch (SQLException ex) {
-                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        
-        
-        
-       try {
-           PreparedStatement  consulta = cn.prepareStatement("INSERT INTO empleado (nombreEmpleado, apellidoEmpleado, usuarioEmpleado, teléfonoEmpleado, direccionEmpleado, sueldoEmpleado, idPuesto, passwordEmpleado) values (?,?,?,?,?,?,?,?)");
-        
-        consulta.setString(1,empleado.getNombreEmpleado());
-        consulta.setString(2,empleado.getApellidoEmpleado());
-        consulta.setString(3,empleado.getUsuarioEmpleado());
-        consulta.setInt(4,empleado.getTelefonoUsuario());
-        consulta.setString(5,empleado.getDireccionEmpleado());
-        consulta.setDouble(6,empleado.getSueldoEmpleado());
-        consulta.setInt(7,g);
-        consulta.setString(8, String.valueOf(empleado.getPassword()));
-      
-         consulta.executeUpdate();
-         JOptionPane.showMessageDialog(null, "Datos guardados");// TODO add your handling code here:
-         consulta.close();
-    }                                       
-    catch (SQLException ex) {
-         JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
-           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-          
-       }
+        int g= 0;
+        try {
+            PreparedStatement  consulta = cn.prepareStatement("select idpuesto from puesto where puesto='"+txtPuesto.getSelectedItem()+"'");
+            ResultSet p = consulta.executeQuery();                   
+            while(p.next()){
+                g=p.getInt(1);
+            }       
+        }catch (SQLException ex) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+           PreparedStatement  consulta = cn.prepareStatement("INSERT INTO empleado (nombreEmpleado, apellidoEmpleado, usuarioEmpleado, teléfonoEmpleado, direccionEmpleado, sueldoEmpleado, idPuesto, passwordEmpleado) values (?,?,?,?,?,?,?,?)");        
+            consulta.setString(1,empleado.getNombreEmpleado());
+            consulta.setString(2,empleado.getApellidoEmpleado());
+            consulta.setString(3,empleado.getUsuarioEmpleado());
+            consulta.setInt(4,empleado.getTelefonoUsuario());
+            consulta.setString(5,empleado.getDireccionEmpleado());
+            consulta.setDouble(6,empleado.getSueldoEmpleado());
+            consulta.setInt(7,g);
+            consulta.setString(8, String.valueOf(empleado.getPassword()));    
+            consulta.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Datos guardados");// TODO add your handling code here:
+            consulta.close();
+        }                                       
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex); 
+        }
     }
     
     
-    
-        public void editarEmpleado(JTextField txtidEmpleado, JTextField txtNombre, JTextField txtApellido, JTextField txtUsuario, JTextField txtTelefono, JTextField txtDireccion, JTextField txtSueldo, JComboBox txtPuesto, JPasswordField txtPassword){
-          Empleado empleado = new Empleado();
+    //Método de actualizar
+    public void editarEmpleado(JTextField txtidEmpleado, JTextField txtNombre, JTextField txtApellido, JTextField txtUsuario, JTextField txtTelefono, JTextField txtDireccion, JTextField txtSueldo, JComboBox txtPuesto, JPasswordField txtPassword){
+        Empleado empleado = new Empleado();
         empleado.setIdEmpleado(Integer.parseInt(txtidEmpleado.getText()));
         empleado.setNombreEmpleado(txtNombre.getText());
         empleado.setApellidoEmpleado(txtApellido.getText());
@@ -249,36 +224,28 @@ public class Empleado {
         empleado.setDireccionEmpleado(txtDireccion.getText());
         empleado.setSueldoEmpleado(Double.parseDouble(txtSueldo.getText()));
         empleado.setPassword(String.valueOf(txtPassword.getPassword()));
-        
-                   int g= 0;
-                    try {
-
-                    PreparedStatement  consulta = cn.prepareStatement("select idpuesto from puesto where puesto='"+txtPuesto.getSelectedItem()+"'");
-        ResultSet p = consulta.executeQuery();
-                    
-                    while(p.next()){
-                        g=p.getInt(1);
-                    }
-                   
-                } catch (SQLException ex) {
-                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        
-        
-        String sql= "UPDATE empleado SET empleado.nombreEmpleado = ? , empleado.apellidoEmpleado = ? , empleado.usuarioEmpleado = ? , empleado.teléfonoEmpleado = ? , empleado.direccionEmpleado = ? , empleado.sueldoEmpleado = ? ,empleado.idPuesto = ? , empleado.passwordEmpleado = ? WHERE empleado.idEmpleado = ?";
-        
+        int g= 0;
+        try {
+            PreparedStatement  consulta = cn.prepareStatement("select idpuesto from puesto where puesto='"+txtPuesto.getSelectedItem()+"'");
+            ResultSet p = consulta.executeQuery();
+            while(p.next()){
+                g=p.getInt(1);
+            }                  
+        }catch (SQLException ex) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+        }               
+        String sql= "UPDATE empleado SET empleado.nombreEmpleado = ? , empleado.apellidoEmpleado = ? , empleado.usuarioEmpleado = ? , empleado.teléfonoEmpleado = ? , empleado.direccionEmpleado = ? , empleado.sueldoEmpleado = ? ,empleado.idPuesto = ? , empleado.passwordEmpleado = ? WHERE empleado.idEmpleado = ?";        
         try {
             PreparedStatement consulta = cn.prepareStatement(sql);
-            
             consulta.setString(1,empleado.getNombreEmpleado());
-        consulta.setString(2,empleado.getApellidoEmpleado());
-        consulta.setString(3,empleado.getUsuarioEmpleado());
-        consulta.setInt(4,empleado.getTelefonoUsuario());
-        consulta.setString(5,empleado.getDireccionEmpleado());
-        consulta.setDouble(6,empleado.getSueldoEmpleado());
-        consulta.setInt(7,g);
-        consulta.setString(8, empleado.getPassword());
-             consulta.setInt(9, empleado.getIdEmpleado());
+            consulta.setString(2,empleado.getApellidoEmpleado());
+            consulta.setString(3,empleado.getUsuarioEmpleado());
+            consulta.setInt(4,empleado.getTelefonoUsuario());
+            consulta.setString(5,empleado.getDireccionEmpleado());
+            consulta.setDouble(6,empleado.getSueldoEmpleado());
+            consulta.setInt(7,g);
+            consulta.setString(8, empleado.getPassword());
+            consulta.setInt(9, empleado.getIdEmpleado());
             consulta.executeLargeUpdate();
             JOptionPane.showMessageDialog(null, "Se han modificado los datos");
             consulta.close();
@@ -291,25 +258,23 @@ public class Empleado {
         }
     }
     
-    
-      public void eliminar(JTable TableEmpleado){
+    //método de eliminar
+    public void eliminar(JTable TableEmpleado){
         DefaultTableModel modelProducto= new DefaultTableModel ();
         int fila = TableEmpleado.getSelectedRow();
         String valor = TableEmpleado.getValueAt(fila, 0).toString();
         if( fila >= 0){
-          try{
-            PreparedStatement ps = cn.prepareStatement("Delete FROM empleado Where idempleado = '"+valor+"'");
-               ps.executeUpdate();
+            try{
+                PreparedStatement ps = cn.prepareStatement("Delete FROM empleado Where idempleado = '"+valor+"'");
+                ps.executeUpdate();
                 JOptionPane.showMessageDialog(null,"Dato Eliminado");
-                 modelProducto.removeTableModelListener(TableEmpleado);
-                 modelProducto.getDataVector().removeAllElements();
-                 TableEmpleado.updateUI();
-                
-          } catch (SQLException ex) { 
-             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+                modelProducto.removeTableModelListener(TableEmpleado);
+                modelProducto.getDataVector().removeAllElements();
+                TableEmpleado.updateUI();     
+            }catch (SQLException ex) { 
+                Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
          }
-        
-      } else {
+        }else {
           JOptionPane.showMessageDialog(null,"Seleccionar fila");
       }
     }    
@@ -321,5 +286,5 @@ public class Empleado {
     
     
     
-    
+   
 }
