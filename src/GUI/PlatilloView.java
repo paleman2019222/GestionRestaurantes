@@ -1,6 +1,10 @@
 package GUI;
 import Lógica.Empleado;
 import Lógica.Platillo;
+import Persistencia.Conexion;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,6 +16,11 @@ public class PlatilloView extends javax.swing.JFrame {
     Platillo op = new Platillo();
     Empleado mod;
     
+    String user;
+    
+    Conexion connect = new Conexion();
+    
+    Connection con;
     public PlatilloView() {
         initComponents();
         txtIdPlatillo.setEditable(false);
@@ -20,15 +29,16 @@ public class PlatilloView extends javax.swing.JFrame {
         Editar.setEnabled(false);
     }
 
-    PlatilloView(Empleado mod) {
+    public PlatilloView(Empleado mod) {
         initComponents();
         txtIdPlatillo.setEditable(false);
         op.mostrar(TablePlatillo);
         Eliminar.setEnabled(false);
         Editar.setEnabled(false);
-        this.mod = mod;
+      
         mod.getPuesto();
         mod.getNombreEmpleado();
+          this.mod = mod;
         System.out.println(mod.getNombreEmpleado());    
     }
     
@@ -38,21 +48,47 @@ public class PlatilloView extends javax.swing.JFrame {
         txtPrecioPlatillo.setText(null);
     }
     
-    public void llenarDatos(){
-        Object ob [] = new Object[2];
-        ob[0]=txtNombrePlatillo.getText();
-        ob[0]=txtPrecioPlatillo.getText();
-    }
-
-    public void validarRegistros (){
-        DefaultTableModel modelPuesto = new DefaultTableModel ();
-        for (int i=0; i<TablePlatillo.getRowCount(); i++){
-            if (TablePlatillo.getValueAt(i, 2).equals(txtNombrePlatillo.getText())){
-                JOptionPane.showMessageDialog(null, "El puesto ya está registrado");
-                modelPuesto.removeRow(i);
+   /* public boolean validarRegistros (){
+        boolean bandera = false;
+        String x = txtNombrePlatillo.getText();
+         DefaultTableModel modelPlatillo = (DefaultTableModel) TablePlatillo.getModel();
+         System.out.println(modelPlatillo);
+                    if(x.equals(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),1))){
+                bandera = false;
+           }else{
+                   for (int i=0; i<TablePlatillo.getRowCount(); i++){
+           if (TablePlatillo.getValueAt(i, 1).equals(txtNombrePlatillo.getText())){
+                bandera = true;
             }
+            
+        }  
+                    }
+
+        return bandera;
+    }*/
+    
+    
+    public boolean validarRegistros(){
+        boolean bandera = false;
+              Connection con = connect.conectar();
+         
+          user = txtNombrePlatillo.getText();
+         String Consulta = "select platillo.nombrePLatillo from platillo where nombrePlatillo ='"+user+"'";
+         
+          try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(Consulta);
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "El nombre del platillo ya esta regtistrado");
+          bandera = true;
+        }else{
+                bandera = false;
+            }
+              
+        }catch(Exception e){
+            System.out.println(e);
         }
-        llenarDatos();
+        return bandera;
     }
       
     private boolean isDouble(String cadena) {
@@ -244,36 +280,67 @@ public class PlatilloView extends javax.swing.JFrame {
             String x = txtPrecioPlatillo.getText();
             if(isDouble(x)==false){
                 JOptionPane.showMessageDialog(null, "El campo de precio debe contener únicamente números, intentelo de nuevo por favor.");
-            }else{
-                validarRegistros();
-                op.nuevoRegistro(txtNombrePlatillo, txtPrecioPlatillo);
+            }else if(validarRegistros()==false){  
+                       op.nuevoRegistro(txtNombrePlatillo, txtPrecioPlatillo);
                 op.mostrar(TablePlatillo);
-                limpiar();   
+                limpiar(); 
+              
+            }else{             
+           JOptionPane.showMessageDialog(null, "El platillo ya está registrado");
             }
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
+        System.out.println(TablePlatillo.getValueAt(TablePlatillo.getSelectedRow(), 1));
+        System.out.println(txtNombrePlatillo.getText());
         if(txtNombrePlatillo.getText().equals("") || txtPrecioPlatillo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
         } else{
             String x = txtPrecioPlatillo.getText();
             if(isDouble(x)==false){
                 JOptionPane.showMessageDialog(null, "El campo de precio debe contener únicamente números, intentelo de nuevo por favor.");
-            }else{
-                int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
-                if(resp ==0){
-                    validarRegistros();
+            }else{  
+                
+                   if(txtNombrePlatillo.getText().equals(TablePlatillo.getValueAt(TablePlatillo.getSelectedRow(), 1))){
+                                       int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
+                System.out.println(resp);
+                if(resp ==0){                    
                     op.modificarRegistro(txtIdPlatillo, txtNombrePlatillo, txtPrecioPlatillo);
                     op.mostrar(TablePlatillo);
                     limpiar();
-                }
+                     Guardar.setEnabled(true); 
+                     Eliminar.setEnabled(false);
+                     Editar.setEnabled(false); 
+                }else if(resp==1){
+                     Guardar.setEnabled(false);
+                     Eliminar.setEnabled(true);
+                     Editar.setEnabled(true);
+                
+                  
+                  }
+                   
+                   
+                   
+                   
+                   }else if(validarRegistros() == true){
+                        JOptionPane.showMessageDialog(null, "El registro ya existe");
+                       
+                    }else{
+                        op.modificarRegistro(txtIdPlatillo, txtNombrePlatillo, txtPrecioPlatillo);
+                    op.mostrar(TablePlatillo);
+                    limpiar();
+                     Guardar.setEnabled(true); 
+                     Eliminar.setEnabled(false);
+                     Editar.setEnabled(false); 
+                    }
+          
             }
+            
         }
         
-        Eliminar.setEnabled(false);
-        Editar.setEnabled(false);
-        Guardar.setEnabled(true); 
+
+       
     }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
@@ -290,10 +357,16 @@ public class PlatilloView extends javax.swing.JFrame {
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void TablePlatilloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablePlatilloMouseClicked
+        //System.out.println(TablePlatillo.getSelectedRow());
+        //System.out.println(TablePlatillo.getValueAt(TablePlatillo.getSelectedRow(),1));
+       // System.out.println(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),1));
         DefaultTableModel modelPlatillo = (DefaultTableModel) TablePlatillo.getModel();
         txtIdPlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),0)+"");
         txtNombrePlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),1)+"");
         txtPrecioPlatillo.setText(modelPlatillo.getValueAt(TablePlatillo.getSelectedRow(),2)+"");
+         Eliminar.setEnabled(true);
+        Editar.setEnabled(true);
+        Guardar.setEnabled(false);
     }//GEN-LAST:event_TablePlatilloMouseClicked
 
     private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked

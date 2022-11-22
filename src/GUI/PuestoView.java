@@ -21,9 +21,10 @@ public class PuestoView extends javax.swing.JFrame {
         initComponents();
         txtidpuesto.setEditable(false);
         op.mostrar(TablePuesto);
-        this.mod = mod;
+        
         mod.getPuesto();
         mod.getNombreEmpleado();
+        this.mod = mod;
         System.out.println(mod.getNombreEmpleado());
     }
 
@@ -37,15 +38,18 @@ public class PuestoView extends javax.swing.JFrame {
         ob[0]=txtpuesto.getText();
     }
 
-    public void validarRegistros (){
+    public boolean validarRegistros (){
+        boolean bandera = false;
         DefaultTableModel modelPuesto = new DefaultTableModel ();
         for (int i=0; i<TablePuesto.getRowCount(); i++){
             if (TablePuesto.getValueAt(i, 1).equals(txtpuesto.getText())){
-                JOptionPane.showMessageDialog(null, "El puesto ya está registrado");
-                modelPuesto.removeRow(i);
+                //JOptionPane.showMessageDialog(null, "El puesto ya está registrado");
+               // modelPuesto.removeRow(i-1);
+                bandera = true;
             }
         }
         llenarDatos();
+        return bandera;
     }
 
     /**
@@ -190,12 +194,14 @@ public class PuestoView extends javax.swing.JFrame {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         if(txtpuesto.getText().equals("")){
             JOptionPane.showMessageDialog(null, "El campo está vacio, verifique su información e inténtelo de nuevo");
+        }else if(validarRegistros()==true){
+       JOptionPane.showMessageDialog(null, "El puesto ya está registrado");
         }else{
-            validarRegistros();
-            op.nuevoRegistro(txtpuesto);
+                          op.nuevoRegistro(txtpuesto);
             op.mostrar(TablePuesto);
-            limpiar();    
-        }
+            limpiar();      
+                    }
+    
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void TablePuestoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablePuestoMouseClicked
@@ -214,7 +220,7 @@ public class PuestoView extends javax.swing.JFrame {
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea regresar al menú principal?");
         if(resp ==0){
-            Menu mn = new Menu();
+            Menu mn = new Menu(mod);
             mn.setVisible(true);
             this.setVisible(false); 
        }  

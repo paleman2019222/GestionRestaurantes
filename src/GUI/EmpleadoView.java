@@ -80,6 +80,28 @@ public class EmpleadoView extends javax.swing.JFrame {
         }
         return resultado;
     }
+         
+             public void llenarDatos(){
+        Object ob [] = new Object[2];
+        ob[0]=txtUser.getText();
+        ob[1]=txtTelefono.getText();
+    }
+
+    public boolean validarRegistros (){
+        boolean bandera = false;
+        for (int i=0; i<TblEmpleado.getRowCount(); i++){
+            if (TblEmpleado.getValueAt(i, 3).equals(txtUser.getText())){
+                JOptionPane.showMessageDialog(null, "El usuario ya está registrado");
+               // modelPuesto.removeRow(i-1);
+                bandera = true;
+            }else if(TblEmpleado.getValueAt(i, 4).equals(txtTelefono.getText())){
+                JOptionPane.showMessageDialog(null, "El número telefónico ya está registrado");
+                 bandera = true;
+            }
+        }
+       // llenarDatos();
+        return bandera;
+    }
   
   
   
@@ -443,9 +465,13 @@ public class EmpleadoView extends javax.swing.JFrame {
             }else if(isDouble(y)==false){
              JOptionPane.showMessageDialog(null, "El campo de sueldo debe contener únicamente números, intentelo de nuevo por favor.");
             }else if(t==8){
-                                    emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
-        emp.mostrar(TblEmpleado);
-        limpiar();    
+                
+            if(validarRegistros()==false){
+                
+                                emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
+                emp.mostrar(TblEmpleado);
+                    limpiar(); 
+            } 
             }else{
              JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener 8 dígitos");
 
@@ -492,9 +518,12 @@ public class EmpleadoView extends javax.swing.JFrame {
                                int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
        if(resp ==0){
   
+            if(validarRegistros()==false){                 
                emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
         emp.mostrar(TblEmpleado);
            limpiar();
+            }
+
        }
             }
             

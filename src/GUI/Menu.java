@@ -260,7 +260,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnPlatilloViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlatilloViewActionPerformed
         // TODO add your handling code here:
-         PlatilloView mn = new PlatilloView();
+         PlatilloView mn = new PlatilloView(mod);
         mn.setVisible(true);
         this.setVisible(false);
 
