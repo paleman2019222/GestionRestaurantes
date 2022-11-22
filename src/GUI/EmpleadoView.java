@@ -81,29 +81,52 @@ public class EmpleadoView extends javax.swing.JFrame {
         return resultado;
     }
          
-             public void llenarDatos(){
-        Object ob [] = new Object[2];
-        ob[0]=txtUser.getText();
-        ob[1]=txtTelefono.getText();
-    }
 
-    public boolean validarRegistros (){
+       public boolean validarRegistros(){
         boolean bandera = false;
-        for (int i=0; i<TblEmpleado.getRowCount(); i++){
-            if (TblEmpleado.getValueAt(i, 3).equals(txtUser.getText())){
-                JOptionPane.showMessageDialog(null, "El usuario ya está registrado");
-               // modelPuesto.removeRow(i-1);
-                bandera = true;
-            }else if(TblEmpleado.getValueAt(i, 4).equals(txtTelefono.getText())){
-                JOptionPane.showMessageDialog(null, "El número telefónico ya está registrado");
-                 bandera = true;
+              Connection con = connect.conectar();
+         
+          String user = txtUser.getText();
+         String Consulta = "select empleado.usuarioEmpleado from empleado where usuarioEmpleado ='"+user+"'";
+         
+          try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(Consulta);
+            if(rs.next()){
+                //JOptionPane.showMessageDialog(null, "El nombre de usuario ya esta regtistrado");
+          bandera = true;
+        }else{
+                bandera = false;
             }
+              
+        }catch(Exception e){
+            System.out.println(e);
         }
-       // llenarDatos();
         return bandera;
     }
   
-  
+      public boolean validarTelefono(){
+        boolean bandera = false;
+              Connection con = connect.conectar();
+         
+          String telefono = txtTelefono.getText();
+         String Consulta = "select empleado.teléfonoEmpleado from empleado where teléfonoEmpleado ='"+telefono+"'";
+         
+          try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(Consulta);
+            if(rs.next()){
+                //JOptionPane.showMessageDialog(null, "El nombre de usuario ya esta regtistrado");
+          bandera = true;
+        }else{
+                bandera = false;
+            }
+              
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return bandera;
+    }
   
   Connection cc; 
     public EmpleadoView() {
@@ -468,10 +491,20 @@ public class EmpleadoView extends javax.swing.JFrame {
                 
             if(validarRegistros()==false){
                 
+            
+                if(validarTelefono()==false){
+                                    
                                 emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
                 emp.mostrar(TblEmpleado);
                     limpiar(); 
-            } 
+                }else{
+                      JOptionPane.showMessageDialog(null, "El número de teléfono ya esta registrado");
+                }
+
+            }else{
+                
+                JOptionPane.showMessageDialog(null, "El nombre de usuario ya esta registrado");
+            }
             }else{
              JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener 8 dígitos");
 
@@ -514,17 +547,37 @@ public class EmpleadoView extends javax.swing.JFrame {
             }else if(isDouble(y)==false){
              JOptionPane.showMessageDialog(null, "El campo de sueldo debe contener únicamente números, intentelo de nuevo por favor.");
             }else{
-            
-                               int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
-       if(resp ==0){
-  
-            if(validarRegistros()==false){                 
+                        
+                
+                        if(txtTelefono.getText().equals(TblEmpleado.getValueAt(TblEmpleado.getSelectedRow(), 4))){
+                        if(txtUser.getText().equals(TblEmpleado.getValueAt(TblEmpleado.getSelectedRow(), 3))){
+                            
+                        
+                                            int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
+                            if(resp ==0){
+                
                emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
         emp.mostrar(TblEmpleado);
            limpiar();
-            }
+       
 
-       }
+       }else if(resp==1){
+           //cambiar botones
+       } 
+                        }else if(validarRegistros()==true){
+                            JOptionPane.showMessageDialog(null, "El usuario ya esta registrado");
+                        }else{
+                                       emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
+        emp.mostrar(TblEmpleado);
+           limpiar();
+                        }
+                        }else if(validarTelefono()== true){
+                         JOptionPane.showMessageDialog(null, "El  número teléfonico ya esta registrado");
+                     }else{
+                             emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
+        emp.mostrar(TblEmpleado);
+           limpiar();
+                        }      
             }
             
 

@@ -79,7 +79,7 @@ public class PlatilloView extends javax.swing.JFrame {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(Consulta);
             if(rs.next()){
-                JOptionPane.showMessageDialog(null, "El nombre del platillo ya esta regtistrado");
+                //JOptionPane.showMessageDialog(null, "El nombre del platillo ya esta regtistrado");
           bandera = true;
         }else{
                 bandera = false;
