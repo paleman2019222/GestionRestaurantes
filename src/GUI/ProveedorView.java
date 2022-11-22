@@ -1,6 +1,10 @@
 package GUI;
 import Lógica.Empleado;
 import Lógica.Proveedor;
+import Persistencia.Conexion;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class ProveedorView extends javax.swing.JFrame {
     Proveedor op = new Proveedor();
     Empleado mod;
+     Conexion connect = new Conexion();
     /**
      * Creates new form ProveedorVista
      */
@@ -41,20 +46,29 @@ public class ProveedorView extends javax.swing.JFrame {
         txtnombreproveedor.setText(null);
     }
     
-    public void llenarDatos(){
-        Object ob [] = new Object[1];
-        ob[0]=txtnombreproveedor.getText();
-    }
-
-    public void validarRegistros (){
-        DefaultTableModel modelPuesto = new DefaultTableModel ();
-        for (int i=0; i<TableProveedor.getRowCount(); i++){
-            if (TableProveedor.getValueAt(i, 1).equals(txtnombreproveedor.getText())){
-                JOptionPane.showMessageDialog(null, "El proveedor ya está registrado");
-                modelPuesto.removeRow(i);
+    
+      public boolean validarRegistros(){
+        boolean bandera = false;
+       
+              Connection con = connect.conectar();
+         
+          String proveedor = txtnombreproveedor.getText();
+         String Consulta = "select proveedor.nombreProveedor from proveedor where nombreProveedor ='"+proveedor+"'";
+         
+          try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(Consulta);
+            if(rs.next()){
+                //JOptionPane.showMessageDialog(null, "El nombre del platillo ya esta regtistrado");
+          bandera = true;
+        }else{
+                bandera = false;
             }
+              
+        }catch(Exception e){
+            System.out.println(e);
         }
-        llenarDatos();
+        return bandera;
     }
 
     /**
@@ -224,10 +238,15 @@ public class ProveedorView extends javax.swing.JFrame {
         if(txtnombreproveedor.getText().equals("")){
             JOptionPane.showMessageDialog(null, "El campo está vacio, verifique su información e inténtelo de nuevo");
         }else{
-            validarRegistros();
-            op.nuevoRegistro(txtnombreproveedor);
+            if(validarRegistros()==false){
+                            op.nuevoRegistro(txtnombreproveedor);
         op.mostrar(TableProveedor);
-        limpiar();   
+        limpiar(); 
+            }else{
+                JOptionPane.showMessageDialog(null, "El proveedor ya está registrado");
+            }
+            
+  
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
@@ -235,13 +254,20 @@ public class ProveedorView extends javax.swing.JFrame {
         if(txtnombreproveedor.getText().equals("")){
             JOptionPane.showMessageDialog(null, "El campo está vacio, verifique su información e inténtelo de nuevo");
         } else{
-            int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
+            
+            if(validarRegistros()==false){
+             int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
             if(resp ==0){
                 validarRegistros();
                 op.modificarRegistro(txtidproveedor, txtnombreproveedor);
                 op.mostrar(TableProveedor);
                 limpiar();
                 }
+            }else{
+              JOptionPane.showMessageDialog(null, "El proveedor ya está registrado");
+
+            }
+            
             }
         
         Eliminar.setEnabled(false);
