@@ -52,10 +52,18 @@ public class ViewProducto extends javax.swing.JFrame {
         idproducto.setEditable(false);
         op.mostrar(TableProducto);
         op.cargarComboBox(Tboxidproveedor);
+        btnEliminar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnGuardar.setEnabled(true);
         this.mod = mod;
         mod.getPuesto();
         mod.getNombreEmpleado();
         System.out.println(mod.getNombreEmpleado());
+        if(!mod.getPuesto().equals("Administrador")){
+        btnEditar.setVisible(false);
+        btnGuardar.setVisible(false);
+        btnEliminar.setVisible(false);
+        }
     }
     
     @SuppressWarnings("unchecked")

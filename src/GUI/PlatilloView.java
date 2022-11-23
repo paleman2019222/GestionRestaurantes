@@ -33,7 +33,12 @@ public class PlatilloView extends javax.swing.JFrame {
         mod.getPuesto();
         mod.getNombreEmpleado();
         this.mod = mod;
-        System.out.println(mod.getNombreEmpleado());    
+        System.out.println(mod.getNombreEmpleado()); 
+        if(!mod.getPuesto().equals("Administrador")){
+            Eliminar.setVisible(false);
+            Editar.setVisible(false);
+            Guardar.setVisible(false);
+        }
     }
     
     //Método que limpia todos el contenido de los TextField
@@ -59,6 +64,7 @@ public class PlatilloView extends javax.swing.JFrame {
     public boolean validarRegistros(){
         boolean bandera = false;
         platillo = txtNombrePlatillo.getText();
+        Connection con = connect.conectar();
         String Consulta = "select platillo.nombrePLatillo from platillo where nombrePlatillo ='"+platillo+"'";
         try{
             Statement st = con.createStatement();
