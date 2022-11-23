@@ -219,6 +219,7 @@ public class PuestoView extends javax.swing.JFrame {
         DefaultTableModel modelPuesto = (DefaultTableModel) TablePuesto.getModel();
         txtidpuesto.setText(modelPuesto.getValueAt(TablePuesto.getSelectedRow(),0)+"");
         txtpuesto.setText(modelPuesto.getValueAt(TablePuesto.getSelectedRow(),1)+"");
+        Guardar.setEnabled(false);
     }//GEN-LAST:event_TablePuestoMouseClicked
 
     //Botón para salir del programa
