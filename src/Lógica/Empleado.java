@@ -28,6 +28,7 @@ public class Empleado {
     private String puesto;
     Conexion cnn = new Conexion ();
     Connection cn = cnn.conectar();
+    
     public Empleado() {
     }
 
@@ -123,8 +124,7 @@ public class Empleado {
         this.puesto = puesto;
     }
     
-    
-
+    //Función para mostrar los datos en la la tabla de la interfaz
     public void mostrar(JTable TableEmpleado){
         DefaultTableModel modelEmpleado = new DefaultTableModel ();
         String []datos = new String [8]; 
@@ -158,11 +158,12 @@ public class Empleado {
         }
     }
     
+    //Método para mostrar los puestos por medio de un ComboBox
     public void cargarComboBox(JComboBox puesto){
         try{
             Connection cn = cnn.conectar();
             PreparedStatement  consulta = cn.prepareStatement("SELECT puesto from puesto");
-            ResultSet rs = consulta.executeQuery();      
+            ResultSet rs = consulta.executeQuery();   
             while(rs.next()){
             puesto.addItem(rs.getString("puesto"));
             }
@@ -171,7 +172,7 @@ public class Empleado {
         }  
     }
     
-    //Método para guardar empleado
+    //Método para guardar a un nuevo empleado
     public void guardarEmpleado(JTextField txtNombre, JTextField txtApellido, JTextField txtUsuario, JTextField txtTelefono, JTextField txtDireccion, JTextField txtSueldo, JComboBox txtPuesto, JPasswordField txtPassword){
         cn = cnn.conectar();
         Empleado empleado = new Empleado();
@@ -211,7 +212,6 @@ public class Empleado {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex); 
         }
     }
-    
     
     //Método de actualizar
     public void editarEmpleado(JTextField txtidEmpleado, JTextField txtNombre, JTextField txtApellido, JTextField txtUsuario, JTextField txtTelefono, JTextField txtDireccion, JTextField txtSueldo, JComboBox txtPuesto, JPasswordField txtPassword){
@@ -258,7 +258,7 @@ public class Empleado {
         }
     }
     
-    //método de eliminar
+    //Método de eliminar
     public void eliminar(JTable TableEmpleado){
         DefaultTableModel modelProducto= new DefaultTableModel ();
         int fila = TableEmpleado.getSelectedRow();
@@ -273,18 +273,14 @@ public class Empleado {
                 TableEmpleado.updateUI();     
             }catch (SQLException ex) { 
                 Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-         }
+            }
         }else {
           JOptionPane.showMessageDialog(null,"Seleccionar fila");
-      }
+        }
     }    
         
     @Override
     public String toString() {
         return "Empleado{" + "idEmpleado=" + idEmpleado + ", nombreEmpleado=" + nombreEmpleado + ", apellidoEmpleado=" + apellidoEmpleado + ", usuarioEmpleado=" + usuarioEmpleado + ", telefonoUsuario=" + telefonoUsuario + ", direccionEmpleado=" + direccionEmpleado + ", sueldoEmpleado=" + sueldoEmpleado + ", idPuesto=" + idPuesto + '}';
     }
-    
-    
-    
-   
 }

@@ -1,6 +1,5 @@
 package Lógica;
 
-//Librerias a utilizar
 import Persistencia.Conexion;
 import GUI.PlatilloView;
 import java.sql.Connection;
@@ -15,12 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author 50236
- */
 public class Platillo {
-    //Variables 
     private int idplatillo;
     private String nombrePlatillo;
     private double precioPlatillo;
@@ -37,8 +31,7 @@ public class Platillo {
         this.nombrePlatillo = nombrePlatillo;
         this.precioPlatillo = precioPlatillo;
     }
-    
-    //Getter and Setter
+  
     public int getIdplatillo() {
         return idplatillo;
     }
@@ -68,29 +61,25 @@ public class Platillo {
         return "Platillo{" + "idplatillo=" + idplatillo + ", nombrePlatillo=" + nombrePlatillo + ", precioPlatillo=" + precioPlatillo + ", cnn=" + cnn + ", cn=" + cn + '}';
     }
     
-    //Función para mostrar los datos en la interfaz
+    //Función para mostrar los datos en la tabla de la interfaz
     public void mostrar(JTable TablePlatillo){
         DefaultTableModel modelPlatillo = new DefaultTableModel ();
         String []datos = new String [3]; 
-        
         String sql = "select * from platillo";
         Statement st;
         modelPlatillo.addColumn("ID");
         modelPlatillo.addColumn("Nombre");
         modelPlatillo.addColumn("Precio");
         TablePlatillo.setModel(modelPlatillo);
-        
         try{
             st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            
             while (rs.next()){
                 datos[0]=rs.getString(1);
                 datos[1]=rs.getString(2);
                 datos[2]=rs.getString(3);
                 modelPlatillo.addRow(datos);
             }
-            
             TablePlatillo.setModel(modelPlatillo);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Error al mostrar los datos: "+e.toString());
@@ -103,12 +92,10 @@ public class Platillo {
         plat.setNombrePlatillo(txtNombrePlatillo.getText());
         plat.setPrecioPlatillo(Double.parseDouble(txtPrecioPlatillo.getText()));
         String sql= "INSERT INTO platillo (nombrePlatillo, precioPlatillo) values (?,?)";
-        
         try {
             PreparedStatement consulta = cn.prepareStatement(sql);
             consulta.setString(1, plat.getNombrePlatillo());
             consulta.setDouble(2, plat.getPrecioPlatillo());
-            
             consulta.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se han guardado los datos");
             consulta.close();
@@ -126,14 +113,11 @@ public class Platillo {
         plat.setNombrePlatillo(txtnombrePlatillo.getText());
         plat.setPrecioPlatillo(Double.parseDouble(precioPlatillo.getText()));
         String sql= "UPDATE platillo SET platillo.nombrePlatillo = ?, platillo.precioPlatillo = ? WHERE platillo.idplatillo = ?";
-        
         try {
             PreparedStatement consulta = cn.prepareStatement(sql);
-            
             consulta.setString(1, plat.getNombrePlatillo());
             consulta.setDouble(2, plat.getPrecioPlatillo());
             consulta.setInt(3, plat.getIdplatillo());
-            
             consulta.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se han modificado los datos");
             consulta.close();
@@ -149,7 +133,6 @@ public class Platillo {
         DefaultTableModel modelPlatillo = new DefaultTableModel ();
         int fila = TablePlatillo.getSelectedRow();
         String valor = TablePlatillo.getValueAt(fila, 0).toString();
-        
         if( fila >= 0){
             try{
                 PreparedStatement ps = cn.prepareStatement("Delete FROM platillo Where idplatillo = '"+valor+"'");

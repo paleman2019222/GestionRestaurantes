@@ -1,5 +1,4 @@
 package GUI;
-
 import Persistencia.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,14 +11,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Lógica.Empleado;
 import javax.swing.JComboBox;
-/**
- *
- * @author Raquel
- */
+ 
 public class EmpleadoView extends javax.swing.JFrame {
         Conexion connect = new Conexion();
         Empleado emp = new Empleado();
         Empleado mod;
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
@@ -28,14 +25,14 @@ public class EmpleadoView extends javax.swing.JFrame {
     });
     }
       
-      //Método para validar que los datos de un campo      
+      //Método para validar que los datos de un campo es de tipo entero  
     private boolean isNumeric(String cadena) {
         boolean resultado;
         try{
-        Integer.parseInt(cadena);
-                resultado=true;
+            Integer.parseInt(cadena);
+            resultado=true;
         }catch(NumberFormatException e){
-        resultado=false;
+            resultado=false;
         }
         return resultado;
     }
@@ -44,10 +41,10 @@ public class EmpleadoView extends javax.swing.JFrame {
     private boolean isDouble(String cadena) {
         boolean resultado;
         try{
-        Double.parseDouble(cadena);
-                resultado=true;
+            Double.parseDouble(cadena);
+            resultado=true;
         }catch(NumberFormatException e){
-        resultado=false;
+            resultado=false;
         }
         return resultado;
     }
@@ -61,12 +58,11 @@ public class EmpleadoView extends javax.swing.JFrame {
         try{
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(Consulta);
-        if(rs.next()){
+            if(rs.next()){
                 bandera = true;
-        }else{
+            }else{
                 bandera = false;
-            }
-              
+            } 
         }catch(Exception e){
             System.out.println(e);
         }
@@ -82,10 +78,10 @@ public class EmpleadoView extends javax.swing.JFrame {
         try{
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(Consulta);
-        if(rs.next()){
-          bandera = true;
-        }else{
-          bandera = false;
+            if(rs.next()){
+                bandera = true;
+            }else{
+                bandera = false;
             }             
         }catch(Exception e){
             System.out.println(e);
@@ -93,7 +89,6 @@ public class EmpleadoView extends javax.swing.JFrame {
         return bandera;
     }
 
-    
     Connection cc; 
     public EmpleadoView() {
         initComponents();
@@ -118,10 +113,9 @@ public class EmpleadoView extends javax.swing.JFrame {
         this.mod = mod;
         mod.getPuesto();
         mod.getNombreEmpleado();
-         System.out.println(mod.getNombreEmpleado());
+        System.out.println(mod.getNombreEmpleado());
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -377,7 +371,7 @@ public class EmpleadoView extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel4.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 650, 90, 30));
+        jPanel4.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 700, 100, 30));
 
         btnGuardar.setText("Guardar");
         btnGuardar.setBorder(null);
@@ -386,7 +380,7 @@ public class EmpleadoView extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel4.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 650, 100, 30));
+        jPanel4.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 660, 100, 30));
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -394,7 +388,12 @@ public class EmpleadoView extends javax.swing.JFrame {
                 btnCancelarMouseClicked(evt);
             }
         });
-        jPanel4.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 690, 100, 30));
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 700, 100, 30));
 
         txtPassword.setBackground(new java.awt.Color(0, 0, 0));
         txtPassword.setForeground(new java.awt.Color(255, 255, 255));
@@ -411,9 +410,9 @@ public class EmpleadoView extends javax.swing.JFrame {
                 btnEditarActionPerformed(evt);
             }
         });
-        jPanel4.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 650, 100, 30));
+        jPanel4.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 660, 100, 30));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 780));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 370, 780));
 
         Salir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar-sesion (27px).png"))); // NOI18N
@@ -442,34 +441,32 @@ public class EmpleadoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     //Acción que realiza el botón guardar, llamando al método de la clase.
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
         if(txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtUser.getText().equals("") ||txtTelefono.getText().equals("")|| txtDireccion.getText().equals("") || txtSueldo.getText().equals("") || boxPuesto.getSelectedItem().equals("") || txtPassword.getPassword().equals("")){
-        JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
+            JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
         }else{
             String x = txtTelefono.getText();
             String y = txtSueldo.getText();
             int t = x.length();
             if(isNumeric(x)==false){
-            JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener únicamente números, intentelo de nuevo por favor.");
+                JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener únicamente números, intentelo de nuevo por favor.");
             }else if(isDouble(y)==false){
-             JOptionPane.showMessageDialog(null, "El campo de sueldo debe contener únicamente números, intentelo de nuevo por favor.");
+                JOptionPane.showMessageDialog(null, "El campo de sueldo debe contener únicamente números, intentelo de nuevo por favor.");
             }else if(t==8){   
-            if(validarRegistros()==false){
-                if(validarTelefono()==false){         
-                   emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
-                   emp.mostrar(TblEmpleado);
-                   limpiar(); 
-                }else{
-                   JOptionPane.showMessageDialog(null, "El número de teléfono ya esta registrado");
+                if(validarRegistros()==false){
+                    if(validarTelefono()==false){         
+                        emp.guardarEmpleado(txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
+                        emp.mostrar(TblEmpleado);
+                        limpiar(); 
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El número de teléfono ya esta registrado");
+                    }
+                }else{             
+                    JOptionPane.showMessageDialog(null, "El nombre de usuario ya esta registrado");
                 }
-            }else{             
-                JOptionPane.showMessageDialog(null, "El nombre de usuario ya esta registrado");
-            }
             }else{
-             JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener 8 dígitos");
+                JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener 8 dígitos");
             }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -497,7 +494,7 @@ public class EmpleadoView extends javax.swing.JFrame {
             emp.eliminar(TblEmpleado);
             emp.mostrar(TblEmpleado);
             limpiar();
-       }   
+        }   
         btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnGuardar.setEnabled(true);
@@ -508,7 +505,7 @@ public class EmpleadoView extends javax.swing.JFrame {
         int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea Salir?");
         if(resp ==0){
            System.exit(0);
-       }   
+        }   
     }//GEN-LAST:event_SalirMouseClicked
 
     //Botón que regresa al menú inicial
@@ -518,7 +515,7 @@ public class EmpleadoView extends javax.swing.JFrame {
             Menu mn = new Menu(mod);
             mn.setVisible(true);
             this.setVisible(false); 
-         }        
+        }        
     }//GEN-LAST:event_MenuMouseClicked
 
     //Accion del botón Editar llamando al método de la clase
@@ -528,53 +525,53 @@ public class EmpleadoView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Uno o varios campos están vacios, verifique su información e inténtelo de nuevo");
         }else{
             if(d.equals("")){
-            JOptionPane.showMessageDialog(null, "El campo de contraseña está vacío, Ingrese su contraseña actual o escriba una contraseña nueva e intentelo de nuevo");   
-        }else{           
-            String x = txtTelefono.getText();
-            String y = txtSueldo.getText();
+                JOptionPane.showMessageDialog(null, "El campo de contraseña está vacío, Ingrese su contraseña actual o escriba una contraseña nueva e intentelo de nuevo");   
+            }else{           
+                String x = txtTelefono.getText();
+                String y = txtSueldo.getText();
                 if(isNumeric(x)==false){
                     JOptionPane.showMessageDialog(null, "El campo de número telefónico debe contener únicamente números, intentelo de nuevo por favor.");
                 }else if(isDouble(y)==false){   
                     JOptionPane.showMessageDialog(null, "El campo de sueldo debe contener únicamente números, intentelo de nuevo por favor.");
                 }else{
-            if(txtTelefono.getText().equals(TblEmpleado.getValueAt(TblEmpleado.getSelectedRow(), 4))){
-                if(txtUser.getText().equals(TblEmpleado.getValueAt(TblEmpleado.getSelectedRow(), 3))){
-                    int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
-                    if(resp ==0){
+                    if(txtTelefono.getText().equals(TblEmpleado.getValueAt(TblEmpleado.getSelectedRow(), 4))){
+                        if(txtUser.getText().equals(TblEmpleado.getValueAt(TblEmpleado.getSelectedRow(), 3))){
+                            int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea actualizar el registro seleccionado?");
+                            if(resp ==0){
+                                emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
+                                emp.mostrar(TblEmpleado);
+                                limpiar();
+                                btnEliminar.setEnabled(false);
+                                btnCancelar.setEnabled(false);
+                                btnGuardar.setEnabled(true);
+                            }else if(resp==1){
+                                btnEliminar.setEnabled(false);
+                                btnEditar.setEnabled(false);
+                                btnGuardar.setEnabled(true);
+                            } 
+                        }else if(validarRegistros()==true){
+                            JOptionPane.showMessageDialog(null, "El usuario ya esta registrado");
+                        }else{
+                            emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
+                            emp.mostrar(TblEmpleado);
+                            limpiar();
+                            btnEliminar.setEnabled(false);
+                            btnEditar.setEnabled(false);
+                            btnGuardar.setEnabled(true);
+                        }
+                    }else if(validarTelefono()== true){
+                        JOptionPane.showMessageDialog(null, "El  número teléfonico ya esta registrado");
+                    }else{
                         emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
                         emp.mostrar(TblEmpleado);
                         limpiar();
                         btnEliminar.setEnabled(false);
-                        btnCancelar.setEnabled(false);
-                        btnGuardar.setEnabled(true);
-                    }else if(resp==1){
-                        btnEliminar.setEnabled(false);
                         btnEditar.setEnabled(false);
                         btnGuardar.setEnabled(true);
-                    } 
-                }else if(validarRegistros()==true){
-                    JOptionPane.showMessageDialog(null, "El usuario ya esta registrado");
-                      }else{
-                        emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
-                        emp.mostrar(TblEmpleado);
-                        limpiar();
-                        btnEliminar.setEnabled(false);
-                        btnEditar.setEnabled(false);
-                        btnGuardar.setEnabled(true);
-                       }
-            }else if(validarTelefono()== true){
-                JOptionPane.showMessageDialog(null, "El  número teléfonico ya esta registrado");
-               }else{
-                emp.editarEmpleado(txtId, txtNombre, txtApellido, txtUser, txtTelefono, txtDireccion, txtSueldo, boxPuesto, txtPassword);
-                emp.mostrar(TblEmpleado);
-                limpiar();
-                btnEliminar.setEnabled(false);
-                btnEditar.setEnabled(false);
-                btnGuardar.setEnabled(true);
-                }      
+                    }      
                 }
+            }
         }
-         }
         btnEliminar.setEnabled(false);
         btnEditar.setEnabled(false);
         btnGuardar.setEnabled(true);
@@ -587,6 +584,14 @@ public class EmpleadoView extends javax.swing.JFrame {
         btnEliminar.setEnabled(false);
         btnEditar.setEnabled(false);
     }//GEN-LAST:event_btnCancelarMouseClicked
+
+     //Boton cancelar, limpia los campos y reestablece los botones
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiar();
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        btnEditar.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
     
     //Método para limpiar los campos
     public  void limpiar(){
